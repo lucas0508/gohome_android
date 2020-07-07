@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="4dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_margin="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:scaleType="centerCrop"
+            android:layout_width="110dp"
+            android:layout_height="62dp" />
+
+        <RelativeLayout
+            android:layout_marginStart="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="10dp">
+
+            <TextView
+                android:id="@+id/tv_skill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="高级木工技能证"
+                android:textColor="#ff333333"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="待审核"
+                android:textColor="#fffc8419"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_skill"
+                android:layout_marginTop="6dp"
+                android:text="2020-05-14"
+                android:textColor="#ff999999"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

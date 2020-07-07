@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/base_title_layout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="企业名称"
+        android:textColor="#ff666666"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/et_companyName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="请输入企业名称"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="公司地址"
+        android:textColor="#ff666666"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/et_companyAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="请输入企业地址"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="上传营业执照"
+        android:textColor="#ff666666"
+        android:textSize="16sp" />
+
+    <com.qujiali.jiaogegongren.common.model.RoundImageView
+        android:id="@+id/riv_Image"
+        android:layout_width="95dp"
+        android:layout_height="95dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/upload_bg" />
+
+    <RelativeLayout
+        android:id="@+id/rel_refuse"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp">
+
+        <ImageView
+            android:layout_marginStart="42dp"
+            android:id="@+id/iv_triangle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/triangle_up" />
+
+        <LinearLayout
+            android:paddingStart="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_triangle"
+            android:background="@drawable/bg_rectangle_corner">
+
+            <TextView
+                android:layout_marginTop="2dp"
+                android:text="拒绝原因："
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginRight="4dp"
+                android:id="@+id/tv_denial_reason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

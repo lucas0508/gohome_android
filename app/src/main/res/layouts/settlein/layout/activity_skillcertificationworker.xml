@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/base_title_layout" />
+
+
+    <TextView
+        android:layout_margin="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="技能证书简称"
+        android:textColor="#ff666666"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/et_certification_name"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:hint="请输入技能证书简称，不超过6个字"
+        android:maxLength="6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.qujiali.jiaogegongren.common.model.RoundImageView
+        android:id="@+id/riv_Image"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_width="95dp"
+        android:layout_height="95dp"
+        android:src="@mipmap/upload_bg"
+        android:scaleType="centerCrop" />
+
+
+</LinearLayout>

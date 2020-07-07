@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/base_title_layout" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/tv_perfect_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="22dp"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="完善信息"
+                        android:textColor="#ff333333"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:background="#FE9500"
+                        android:padding="2dp"
+                        android:text="待审核"
+                        android:textColor="#ffffff"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_cancel_identity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:background="@drawable/common_back_stroke_shape_gray"
+                        android:text="注销身份"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableRight="@mipmap/icon_editor" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_wanshan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="您还没有完善信息哦~"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_wanshan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="王二蛋"
+                                android:textColor="#ff333333"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="男"
+                                android:textColor="#ff999999"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="48岁"
+                                android:textColor="#ff999999"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="学徒"
+                                android:textColor="#ff999999"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:maxLength="12"
+                            android:text="包揽各种工程、室内装修"
+                            android:textColor="#ff333333"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_skill"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="电工/木工/水暖工"
+                                android:textColor="#ff999999"
+                                android:textSize="12sp" />
+
+
+
+
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="18512587958"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+                        <LinearLayout
+                            android:id="@+id/ll_certificate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_certificate1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/certificate"
+                                android:paddingLeft="24dp"
+                                android:paddingRight="6dp"
+                                android:paddingBottom="1dp"
+                                android:text="高级电工"
+                                android:textColor="#ff068bee"
+                                android:textSize="9sp" />
+
+                            <TextView
+                                android:id="@+id/tv_certificate2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:background="@mipmap/certificate"
+                                android:paddingLeft="24dp"
+                                android:paddingRight="6dp"
+                                android:paddingBottom="1dp"
+                                android:text="高级电工"
+                                android:textColor="#ff068bee"
+                                android:textSize="9sp" />
+
+                            <TextView
+                                android:id="@+id/tv_certificate3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:background="@mipmap/certificate"
+                                android:paddingLeft="24dp"
+                                android:paddingRight="6dp"
+                                android:paddingBottom="1dp"
+                                android:text="高级电工"
+                                android:textColor="#ff068bee"
+                                android:textSize="9sp" />
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/tv_city"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:drawableLeft="@mipmap/loaction_icon"
+                            android:gravity="center_vertical"
+                            android:text="内蒙古呼和浩特市"
+                            android:textColor="#ff999999"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <com.qujiali.jiaogegongren.common.model.RoundImageView
+                        android:id="@+id/riv_image"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_gravity="center"
+                        android:scrollbars="none"
+                        app:type="circle" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rel_refuse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/iv_triangle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="42dp"
+                        android:src="@drawable/triangle_up" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_triangle"
+                        android:background="@drawable/bg_rectangle_corner"
+                        android:orientation="vertical"
+                        android:paddingStart="10dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="拒绝原因："
+                            android:textColor="#ffffff"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tv_denial_reason"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginRight="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:text="接口了发动机克里斯"
+                            android:textColor="#ffffff"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#DDDDDD" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/tv_skill_introduction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="22dp"
+                android:orientation="vertical">
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/icon_editor"
+                    android:text="技能介绍"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_introduction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="您还没有进行技能介绍哦~"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_jineng"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="14dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_introduce"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍......"
+                        android:textColor="#ff666666"
+                        android:textSize="14sp" />
+
+                    <com.jude.easyrecyclerview.EasyRecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:scrollbars="none" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#DDDDDD" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tv_project_experience"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="22dp"
+                android:layout_marginBottom="30dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/icon_editor"
+                    android:text="项目经验"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_project"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:scrollbars="none" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>
