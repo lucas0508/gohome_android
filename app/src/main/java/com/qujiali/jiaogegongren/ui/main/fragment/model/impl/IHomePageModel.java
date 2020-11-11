@@ -7,6 +7,8 @@ import java.util.Map;
 public interface IHomePageModel {
 
 
-    void getHomePageData(Map<String,Object> map, String cityCode, String searchContent, IBaseModel.OnCallbackListener listener);
+    void getHomePageData(Map<String,Object> map, String cityCode, String searchContent, String orderBy,IBaseModel.OnCallbackListener listener);
+
+    void getHomeWorkTypeData(IBaseModel.OnCallbackDataListener onCallbackDataListener);
 
 }

@@ -367,7 +367,7 @@ public class WheelView extends View {
      * 设置当前item w/o 动画. 当index有误是不做任何响应. 
      *  
      * @param index 
-     *            the item index 
+     *            the item_quotaion_title index
      */ 
     public void setCurrentItem(int index) { 
         setCurrentItem(index, false); 
@@ -535,7 +535,7 @@ public class WheelView extends View {
  
     /** 
      * 返回滚轮item的高度 
-     * @return the item height 
+     * @return the item_quotaion_title height
      */ 
     private int getItemHeight() { 
         if (itemHeight != 0) { 

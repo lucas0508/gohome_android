@@ -20,6 +20,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
@@ -35,19 +36,20 @@
                     android:layout_weight="1"
                     android:text="头像"
                     android:textColor="#ff666666"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
                 <com.qujiali.jiaogegongren.common.model.RoundImageView
                     android:id="@+id/riv_headImage"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@mipmap/common_head_picture"
+                    android:src="@mipmap/head_default"
                     app:type="circle" />
 
 
             </LinearLayout>
 
             <View
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginStart="22dp"
@@ -56,10 +58,11 @@
                 android:background="#DDDDDD" />
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="22dp"
                 android:orientation="vertical">
 
@@ -68,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:text="昵称"
                     android:textColor="#666666"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/et_nickName"
@@ -90,19 +93,20 @@
 
 
             <LinearLayout
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="22dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="电话"
+                    android:text="联系电话"
                     android:textColor="#666666"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/et_phone"
@@ -125,16 +129,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="22dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="标题"
+                    android:text="招工标题"
                     android:textColor="#666666"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/et_title"
@@ -142,7 +146,8 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/transparent"
-                    android:hint="请输入标题"
+                    android:hint="请输入招工标题"
+                    android:maxLength="12"
                     android:textColor="#000"
                     android:textSize="16sp" />
 
@@ -158,7 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="22dp"
                 android:orientation="vertical">
 
@@ -166,9 +171,9 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="工种"
+                    android:text="所需工种"
                     android:textColor="#666666"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/et_work_type"
@@ -176,7 +181,8 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/transparent"
-                    android:hint="请输入工种"
+                    android:hint="请输入所需工种"
+                    android:maxLength="4"
                     android:textColor="#000"
                     android:textSize="16sp" />
 
@@ -192,16 +198,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="22dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="位置"
+                    android:text="项目地址"
                     android:textColor="#666666"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_choose_city"
@@ -210,7 +216,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@color/transparent"
                     android:drawableRight="@mipmap/me_right"
-                    android:hint="请选择位置"
+                    android:hint="请选择项目地址"
                     android:textColor="#000"
                     android:textSize="16sp" />
 
@@ -223,10 +229,11 @@
 
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="22dp"
                 android:orientation="vertical">
 
@@ -235,7 +242,7 @@
                     android:layout_height="wrap_content"
                     android:text="价格"
                     android:textColor="#666666"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/et_price"
@@ -256,10 +263,11 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="22dp"
                 android:orientation="vertical">
 
@@ -268,7 +276,7 @@
                     android:layout_height="wrap_content"
                     android:text="标签"
                     android:textColor="#666666"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -289,7 +297,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="22dp"
                 android:orientation="vertical">
 
@@ -298,7 +306,7 @@
                     android:layout_height="wrap_content"
                     android:text="详情描述"
                     android:textColor="#666666"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/et_content"
@@ -332,7 +340,16 @@
                     android:background="#DDDDDD" />
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="现场图片"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="22dp"
+                android:textColor="#666666"
+                android:textSize="16sp" />
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="22dp"
@@ -352,7 +369,7 @@
                     android:verticalSpacing="5dp"
                     android:visibility="visible" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
             <RelativeLayout

@@ -7,13 +7,18 @@ package com.qujiali.jiaogegongren.common.global;
  */
 public class GlobalConstants {
 
-//    public static final String BASE_SERVER_URL = "http://192.168.1.142/mobile";
+
+//    public static final String BASE_SERVER_="http://192.168.1.142";
+
+public static final String BASE_SERVER_ = "https://www.jiaogegongren.com";
+
+    public static final String BASE_SERVER_URL =BASE_SERVER_+ "/mobile";
 
 
-    public static final String BASE_SERVER_URL = "https://www.jiaogegongren.com/mobile";
 
 
-//    public static final String BASE_SERVER_URL = "http://192.168.1.71:8096";
+
+//    public static final String BASE_SERVER_URL = "http://192.168.1.58:8096";
 
 
     public static final String BASE_QI_NIU_URL = "http://media.xiangzq.cn/";
@@ -57,7 +62,7 @@ public class GlobalConstants {
     /**
      * 查询工人发布 标签
      */
-    public static final String APP_RECRUITMENT_LABEL_LIST = BASE_SERVER_URL + "/system/recruit/workers/proficiency";
+    public static final String APP_RECRUITMENT_LABEL_LIST = BASE_SERVER_URL + "/anon/dict/data/dictType/proficiency";
 
     /**
      * 发布工人信息
@@ -128,7 +133,7 @@ public class GlobalConstants {
     /**
      * 获取技能熟练程度
      */
-    public static final String APP_WORKER_PROFICIENCY = BASE_SERVER_URL + "/system/settled/worker/proficiency";
+    public static final String APP_WORKER_PROFICIENCY = BASE_SERVER_URL + "/anon/dict/data/dictType/sys_proficiency";
 
     /**
      * 新增工人入驻 完善信息
@@ -267,7 +272,40 @@ public class GlobalConstants {
     /**
      * 绑定手机号
      */
-    public static final String APP_BIND_PHONE=BASE_SERVER_URL+"/system/mobileUser/wxBind";
+    public static final String APP_BIND_PHONE = BASE_SERVER_URL + "/system/mobileUser/wxBind";
+
+
+    /**
+     * 立即报名
+     */
+    public static final String APP_APPLY_ADD = BASE_SERVER_URL + "/system/apply/add";
+
+    /**
+     * 查新报名列表
+     */
+    public static final String APP_APPLY_LIST = BASE_SERVER_URL + "/system/apply/list";
+
+    /**
+     * 获取常用工种
+     */
+    public static final String APP_COMMON_WORKTYPES = BASE_SERVER_URL + "/anon/dict/data/dictType/sys_common_work";
+
+
+    /**
+     * 电话叫工
+     */
+    public static final String APP_CALLFORWORK = BASE_SERVER_URL +"/anon/callInfo/serviceArea/";
+
+    /**
+     * 获取报价单页面
+     */
+    public static final String APP_QUOTATION = BASE_SERVER_URL +"/anon/serviceType";
+
+    /**
+     *
+     * 获取报价单页面
+     */
+    public static final String APP_QUOTATION_H5 = BASE_SERVER_ +"/dynamicH5/ServiceType?cityCode=";
 
 }
 

@@ -42,7 +42,7 @@
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     app:type="circle"
-                    android:src="@mipmap/common_head_picture" />
+                    android:src="@mipmap/head_default" />
 
 
             </LinearLayout>
@@ -76,7 +76,7 @@
                     android:layout_height="34dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/transparent"
-                    android:hint="请输入姓名"
+                    android:hint="请输入昵称"
                     android:textColor="#ff666666"
                     android:textSize="16sp" />
 
@@ -487,7 +487,7 @@
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     app:type="circle"
-                    android:src="@mipmap/common_head_picture" />
+                    android:src="@mipmap/head_default" />
 
 
             </LinearLayout>

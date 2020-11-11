@@ -115,6 +115,14 @@ public class SettleInActivity extends BaseActivity implements ISettleInView, ISe
     EasyRecyclerView mEasyRecyclerView;
     @BindView(R.id.tv_introduction)
     TextView tv_introduction;
+    @BindView(R.id.tv_sex)
+    TextView tv_sex;
+    @BindView(R.id.tv_birthday)
+    TextView tv_birthday;
+    @BindView(R.id.tv_degree)
+    TextView tv_degree;
+
+
     private Adapter<String> mAdapter;
     //------------项目经验---------
     @BindView(R.id.recycler_project)
@@ -242,6 +250,9 @@ public class SettleInActivity extends BaseActivity implements ISettleInView, ISe
         tv_skill.setText(bsettledWorkerVo.getWorkType());
         tv_phone.setText(bsettledWorkerVo.getPhone());
         tv_city.setText(bsettledWorkerVo.getAreaList());
+        tv_sex.setText(bsettledWorkerVo.getSexText());
+        tv_birthday.setText(bsettledWorkerVo.getAge()+"岁");
+        tv_degree.setText(bsettledWorkerVo.getDegreeText());
         Glide.with(this).
                 applyDefaultRequestOptions(new RequestOptions().
                         circleCrop()).load(bsettledWorkerVo.getProfile()).into(riv_image);
@@ -254,12 +265,12 @@ public class SettleInActivity extends BaseActivity implements ISettleInView, ISe
                 tv_certificate1.setVisibility(View.GONE);
             } else {
                 tv_certificate1.setText(split[0]);
-                if (TextUtils.isEmpty(split[1])) {
+                if (split.length == 1) {
                     tv_certificate2.setVisibility(View.GONE);
                     tv_certificate3.setVisibility(View.GONE);
                 } else {
                     tv_certificate2.setText(split[1]);
-                    if (TextUtils.isEmpty(split[2])) {
+                    if (split.length == 2) {
                         tv_certificate3.setVisibility(View.GONE);
                     } else {
                         tv_certificate3.setText(split[1]);
@@ -406,6 +417,6 @@ public class SettleInActivity extends BaseActivity implements ISettleInView, ISe
     }
 
     @Override
-    public void loadSettlementInformationFail(int code,String info) {
+    public void loadSettlementInformationFail(int code, String info) {
     }
 }

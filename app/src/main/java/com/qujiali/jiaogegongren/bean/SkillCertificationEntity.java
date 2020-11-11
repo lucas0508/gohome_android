@@ -1,6 +1,11 @@
 package com.qujiali.jiaogegongren.bean;
 
-public class SkillCertificationEntity {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class SkillCertificationEntity implements Parcelable {
 
 
     /**
@@ -38,7 +43,7 @@ public class SkillCertificationEntity {
     private Object sysUserId;
     private Object auditTime;
     private int status;
-    private Object refuseReason;
+    private String refuseReason;
     private int settledWorkerId;
     private int delFlag;
     private Object remarks;
@@ -155,11 +160,11 @@ public class SkillCertificationEntity {
         this.status = status;
     }
 
-    public Object getRefuseReason() {
+    public String getRefuseReason() {
         return refuseReason;
     }
 
-    public void setRefuseReason(Object refuseReason) {
+    public void setRefuseReason(String refuseReason) {
         this.refuseReason = refuseReason;
     }
 
@@ -189,4 +194,45 @@ public class SkillCertificationEntity {
 
     public static class ParamsBean {
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.pictrues);
+        dest.writeInt(this.status);
+        dest.writeString(this.refuseReason);
+        dest.writeInt(this.settledWorkerId);
+        dest.writeInt(this.delFlag);
+    }
+
+    public SkillCertificationEntity() {
+    }
+
+    protected SkillCertificationEntity(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.pictrues = in.readString();
+        this.status = in.readInt();
+        this.refuseReason = in.readString();
+        this.settledWorkerId = in.readInt();
+        this.delFlag = in.readInt();
+    }
+
+    public static final Parcelable.Creator<SkillCertificationEntity> CREATOR = new Parcelable.Creator<SkillCertificationEntity>() {
+        @Override
+        public SkillCertificationEntity createFromParcel(Parcel source) {
+            return new SkillCertificationEntity(source);
+        }
+
+        @Override
+        public SkillCertificationEntity[] newArray(int size) {
+            return new SkillCertificationEntity[size];
+        }
+    };
 }

@@ -1,5 +1,7 @@
 package com.qujiali.jiaogegongren.ui.main.fragment.presenter;
 
+import android.util.Log;
+
 import com.qujiali.jiaogegongren.bean.RecruitmentEntity;
 import com.qujiali.jiaogegongren.common.base.BasePresenter;
 import com.qujiali.jiaogegongren.common.base.IBaseModel;
@@ -24,8 +26,11 @@ public class RecruitmentPresenter extends BasePresenter {
         this.iRecruitmentView = iRecruitmentView;
     }
 
-    public void loadRecruitmentData(Map<String,Object> map, String cityCode, String searchContent){
-        iRecruitmentModel.loadRecruitmentData(map, cityCode, searchContent, new IBaseModel.OnCallbackListener() {
+    public void loadRecruitmentData(Map<String,Object> map, String cityCode, String searchContent,String related){
+
+        Log.e("TAG", "onMultiClick loadRecruitmentData : "+searchContent );
+
+        iRecruitmentModel.loadRecruitmentData(map, cityCode, searchContent, related, new IBaseModel.OnCallbackListener() {
             @Override
             public void callback(ResponseEntity res) {
                 if (HttpProvider.isSuccessful(res.getCode())){

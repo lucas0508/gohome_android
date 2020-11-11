@@ -114,6 +114,7 @@ public class SettleInCompanyActivity extends BaseActivity implements ISettleInVi
     protected void initView() {
         mTitle.setText("企业入驻");
         role = getIntent().getStringExtra("role");
+        initRecyclerView();
     }
 
     @Override
@@ -133,7 +134,7 @@ public class SettleInCompanyActivity extends BaseActivity implements ISettleInVi
             tv_cancel_identity.setVisibility(View.VISIBLE);
             ll_wanshan.setVisibility(View.VISIBLE);
             settleInPresenter.querySettleInExperience();
-            initRecyclerView();
+
 
             tv_cancel_identity.setOnClickListener(new OnMultiClickListener() {
                 @Override
@@ -150,9 +151,6 @@ public class SettleInCompanyActivity extends BaseActivity implements ISettleInVi
 
                         }
                     });
-
-
-
                 }
             });
         }
@@ -210,7 +208,7 @@ public class SettleInCompanyActivity extends BaseActivity implements ISettleInVi
 
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                return new ViewHolder<String>(parent, R.layout.item_settlein_image) {
+                return new ViewHolder<String>(parent, R.layout.item_settlein_image2) {
                     private ImageView iv_image;
 
                     @Override
@@ -269,7 +267,7 @@ public class SettleInCompanyActivity extends BaseActivity implements ISettleInVi
             public void onItemClick(int position) {
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("role", role);
-                bundle1.putSerializable("workerList", mAdapterProject.getItem(position));
+                bundle1.putParcelable("workerList", mAdapterProject.getItem(position));
                 startActivity(ProjectExperienceActivity.class, bundle1);
             }
         });
@@ -322,12 +320,12 @@ public class SettleInCompanyActivity extends BaseActivity implements ISettleInVi
             tv_introduction.setVisibility(View.GONE);
             tv_introduce.setText(skillsIntroduce);
             List<String> strings = DevicePermissionsUtils.stringToList(skillsImages);
-            mAdapter.addAll(strings);
+            mAdapter.update(strings);
         }
         bProjectEnterprise = settlelnEntity.getBProjectEnterprise();
 
         if (bProjectEnterprise != null && bProjectEnterprise.size() > 0) {
-            mAdapterProject.addAll(bProjectEnterprise);
+            mAdapterProject.update(bProjectEnterprise);
         }
 
     }

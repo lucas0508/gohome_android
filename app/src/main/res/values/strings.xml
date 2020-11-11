@@ -3,6 +3,7 @@
 
     <string name="rb_tab_menu_homepage">首页</string>
     <string name="rb_tab_menu_material">招工信息</string>
+    <string name="rb_tab_menu_callWorker">电话叫工</string>
     <string name="rb_tab_menu_mypage">我的</string>
     <string name="splash_btn_text">跳过</string>
 
@@ -16,4 +17,10 @@
 
     <string name="time_left">还有%ss</string>
 
+    <string name="cp_search_hint_text">城市中文名</string>
+<!--    <string name="cp_search_hint_text">城市中文名或拼音</string>-->
+    <string name="cp_cancel">取消</string>
+    <string name="cp_no_result">没有找到，换个词试试~</string>
+    <string name="cp_locate_failed">定位失败</string>
+    <string name="cp_locating">正在定位…</string>
 </resources>

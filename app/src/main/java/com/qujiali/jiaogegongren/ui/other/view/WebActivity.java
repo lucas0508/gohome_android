@@ -36,6 +36,7 @@ import com.orhanobut.logger.Logger;
 import com.qujiali.jiaogegongren.R;
 import com.qujiali.jiaogegongren.common.base.BaseActivity;
 import com.qujiali.jiaogegongren.common.global.Constants;
+import com.qujiali.jiaogegongren.common.model.CustomWebView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,7 +60,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     private static Bitmap bitmap;
     private static CopyOnWriteArrayList<Bitmap> bitmapList = new CopyOnWriteArrayList<>();
     @BindView(R.id.wv_view)
-    WebView mWebView;
+    CustomWebView mWebView;
     @BindView(R.id.progressBar)
     ProgressBar mProgressBar;
     @BindView(R.id.tv_title)
@@ -73,7 +74,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void initView() {
-        mTitle.setText("详情");
+
         mTitle.setTextColor(Color.BLACK);
         mClose.setImageResource(R.mipmap.main_left_bg);
     }
@@ -86,8 +87,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     @SuppressLint("JavascriptInterface")
     private void initWebView() {
 
-
-
         mWebView.setHorizontalScrollBarEnabled(false);//水平不显示
         mWebView.setVerticalScrollBarEnabled(false); //垂直不显示
         // 设置支持JavaScript脚本
@@ -98,6 +97,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         webSettings.setAllowFileAccess(true);//设置启用或禁止访问文件数据
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setLoadsImagesAutomatically(true);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webSettings.setSupportZoom(false);// 支持缩放
         webSettings.setBuiltInZoomControls(false);// 设置出现缩放工具
         webSettings.setUseWideViewPort(false);// 扩大比例的缩放
@@ -106,7 +106,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         webSettings.setBlockNetworkImage(false);
         webSettings.setDomStorageEnabled(true);
         webSettings.setDefaultTextEncodingName("utf-8");
-
         /**
          * 自己处理点击事件,返回true
          */
@@ -132,8 +131,13 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                if (mFlag == 1)
+                if (mFlag == 1){
                     mTitle.setText(title);
+                }else if (mFlag==2){
+                    mTitle.setText("参考价");
+                }else {
+                    mTitle.setText("详情");
+                }
             }
 
             @Override
@@ -170,15 +174,14 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 // 注意调用的JS方法名要对应上
                 // 调用javascript的callJS()方法
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    mWebView.evaluateJavascript("javascript:receiveAndroidData()", new ValueCallback<String>() {
+                    mWebView.evaluateJavascript("javascript:backToMain()", new ValueCallback<String>() {
                         @Override
                         public void onReceiveValue(String value) {
                         }
                     });
                 } else {
-                    mWebView.loadUrl("javascript:receiveAndroidData()");
+                    mWebView.loadUrl("javascript:backToMain()");
                 }
-
                 String jsonParams = "123456";
                 //String method = "jsMethod()";//不拼接参数，直接调用js的jsMethod函数
                 String method = "jsMethod(" + jsonParams + ")";//拼接参数，就可以把数据传递给js
@@ -213,7 +216,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         mFlag = getIntent().getIntExtra(Constants.WEB_KEY_FLAG, 0);
         if (mUrl != null) {
             initWebView();
-
             mWebView.loadUrl(mUrl);
         } else {
             mApp.shortToast("网址加载失败！");

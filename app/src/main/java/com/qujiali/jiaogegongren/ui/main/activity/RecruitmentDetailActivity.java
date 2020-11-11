@@ -4,13 +4,20 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -20,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
@@ -28,6 +36,9 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.Gson;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.orhanobut.logger.Logger;
@@ -37,11 +48,17 @@ import com.qujiali.jiaogegongren.bean.RecruitmentEntity;
 import com.qujiali.jiaogegongren.bean.SettlelnEntity;
 import com.qujiali.jiaogegongren.common.base.Adapter;
 import com.qujiali.jiaogegongren.common.base.BaseActivity;
+import com.qujiali.jiaogegongren.common.base.MyAppGlideModule;
 import com.qujiali.jiaogegongren.common.base.OnMultiClickListener;
 import com.qujiali.jiaogegongren.common.base.ViewHolder;
 import com.qujiali.jiaogegongren.common.cache.SharedPreferences.UserInfo;
 import com.qujiali.jiaogegongren.common.model.RoundImageView;
 import com.qujiali.jiaogegongren.common.model.captchaview.SwipeCaptchaView;
+import com.qujiali.jiaogegongren.common.model.reply.CommentBean;
+import com.qujiali.jiaogegongren.common.model.reply.CommentDetailBean;
+import com.qujiali.jiaogegongren.common.model.reply.CommentExpandAdapter;
+import com.qujiali.jiaogegongren.common.model.reply.CommentExpandableListView;
+import com.qujiali.jiaogegongren.common.model.reply.ReplyDetailBean;
 import com.qujiali.jiaogegongren.common.utils.DevicePermissionsUtils;
 import com.qujiali.jiaogegongren.ui.banner.presenter.BannerPresenter;
 import com.qujiali.jiaogegongren.ui.banner.view.activity.IBannerView;
@@ -81,16 +98,20 @@ public class RecruitmentDetailActivity extends BaseActivity implements IRecruitm
     TextView tv_look_number;
     @BindView(R.id.tv_call_number)
     TextView tv_call_number;
-
+    @BindView(R.id.list_reply)
+    CommentExpandableListView expandableListView;
 
     @BindView(R.id.tv_detailed_description)
     TextView tv_detailed_description;
     @BindView(R.id.addviewlayout)
     LinearLayout addviewlayout;
     @BindView(R.id.scroll_view)
-    ScrollView scroll_view;
+    NestedScrollView scroll_view;
     @BindView(R.id.iv_banner)
     ImageView iv_banner;
+    @BindView(R.id.iv_orders)
+    ImageView iv_orders;
+
     @BindView(R.id.recycler_view)
     EasyRecyclerView mEasyRecyclerView;
     private Adapter<String> mAdapter;
@@ -100,6 +121,67 @@ public class RecruitmentDetailActivity extends BaseActivity implements IRecruitm
      */
     private int bannerType = 1;
     private String phoneAll;
+    private BottomSheetDialog dialog;
+    private CommentExpandAdapter adapter;
+    List<CommentDetailBean> commentList = new ArrayList<>();
+
+    private String testJson = "{\n" +
+            "\t\"code\": 1000,\n" +
+            "\t\"message\": \"查看评论成功\",\n" +
+            "\t\"data\": {\n" +
+            "\t\t\"total\": 3,\n" +
+            "\t\t\"list\": [{\n" +
+            "\t\t\t\t\"id\": 42,\n" +
+            "\t\t\t\t\"nickName\": \"程序猿\",\n" +
+            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-4" +
+            "" +
+            "" +
+            "6cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\"content\": \"时间是一切财富中最宝贵的财富。\",\n" +
+            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
+            "\t\t\t\t\"replyTotal\": 1,\n" +
+            "\t\t\t\t\"createDate\": \"三分钟前\",\n" +
+            "\t\t\t\t\"replyList\": [{\n" +
+            "\t\t\t\t\t\"nickName\": \"沐風\",\n" +
+            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\t\"id\": 40,\n" +
+            "\t\t\t\t\t\"commentId\": \"42\",\n" +
+            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹.\",\n" +
+            "\t\t\t\t\t\"status\": \"01\",\n" +
+            "\t\t\t\t\t\"createDate\": \"一个小时前\"\n" +
+            "\t\t\t\t}]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"id\": 41,\n" +
+            "\t\t\t\t\"nickName\": \"设计狗\",\n" +
+            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\"content\": \"这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。\",\n" +
+            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
+            "\t\t\t\t\"replyTotal\": 1,\n" +
+            "\t\t\t\t\"createDate\": \"一天前\",\n" +
+            "\t\t\t\t\"replyList\": [{\n" +
+            "\t\t\t\t\t\"nickName\": \"沐風\",\n" +
+            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\t\"commentId\": \"41\",\n" +
+            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹.\",\n" +
+            "\t\t\t\t\t\"status\": \"01\",\n" +
+            "\t\t\t\t\t\"createDate\": \"三小时前\"\n" +
+            "\t\t\t\t}]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"id\": 40,\n" +
+            "\t\t\t\t\"nickName\": \"产品喵\",\n" +
+            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\"content\": \"笨蛋自以为聪明，聪明人才知道自己是笨蛋。\",\n" +
+            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
+            "\t\t\t\t\"replyTotal\": 0,\n" +
+            "\t\t\t\t\"createDate\": \"三天前\",\n" +
+            "\t\t\t\t\"replyList\": []\n" +
+            "\t\t\t}\n" +
+            "\t\t]\n" +
+            "\t}\n" +
+            "}";
+
 
     @Override
     protected void initView() {
@@ -107,12 +189,120 @@ public class RecruitmentDetailActivity extends BaseActivity implements IRecruitm
         mApp.getLoadingDialog().show();
         int id = getIntent().getIntExtra("id", -1);
         recruitmentDetailPresenter.queryRecruitmentDetailData(id);
-        bannerPresenter.queryBannerDataList(UserInfo.getCityCode(), "4","1");
+        bannerPresenter.queryBannerDataList(UserInfo.getCityCode(), "4", "1");
         initRecyclerView();
+       // commentList= generateTestData();
+        initExpandableListView(commentList);
     }
 
+    /**
+     * by moos on 2018/04/20
+     * func:生成测试数据
+     * @return 评论数据
+     */
+    private List<CommentDetailBean> generateTestData(){
+        Gson gson = new Gson();
+        CommentBean  commentBean = gson.fromJson(testJson, CommentBean.class);
+        List<CommentDetailBean> commentList = commentBean.getData().getList();
+        return commentList;
+    }
+
+    private void initExpandableListView(final List<CommentDetailBean> commentList) {
+        adapter = new CommentExpandAdapter(this, commentList);
+        expandableListView.setGroupIndicator(null);
+        expandableListView.setAdapter(adapter);
+
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
+                boolean isExpanded = expandableListView.isGroupExpanded(groupPosition);
+                Log.e("", "onGroupClick: 当前的评论id>>>" + commentList.get(groupPosition).getId());
+//                if(isExpanded){
+//                    expandableListView.collapseGroup(groupPosition);
+//                }else {
+//                    expandableListView.expandGroup(groupPosition, true);
+//                }
+                showReplyDialog(groupPosition);
+                return true;
+            }
+        });
+
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
+                Toast.makeText(RecruitmentDetailActivity.this, "点击了回复", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                //toast("展开第"+groupPosition+"个分组");
+
+            }
+        });
+        if (commentList != null && commentList.size() > 0) {
+            //默认展开所有回复
+            for (int i = 0; i < commentList.size(); i++) {
+                expandableListView.expandGroup(i);
+            }
+        }
+    }
+
+    /**
+     * by moos on 2018/04/20
+     * func:弹出回复框
+     */
+    private void showReplyDialog(final int position) {
+        dialog = new BottomSheetDialog(this);
+        View commentView = LayoutInflater.from(this).inflate(R.layout.comment_dialog_layout, null);
+        final EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
+        final Button bt_comment = (Button) commentView.findViewById(R.id.dialog_comment_bt);
+        // commentText.setHint("回复 " + commentsList.get(position).getNickName() + " 的评论:");
+        dialog.setContentView(commentView);
+        bt_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String replyContent = commentText.getText().toString().trim();
+                if (!TextUtils.isEmpty(replyContent)) {
+
+                    dialog.dismiss();
+                    ReplyDetailBean detailBean = new ReplyDetailBean("小红", replyContent);
+                    adapter.addTheReplyData(detailBean, position);
+                    expandableListView.expandGroup(position);
+                    Toast.makeText(RecruitmentDetailActivity.this, "回复成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RecruitmentDetailActivity.this, "回复内容不能为空", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        commentText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!TextUtils.isEmpty(charSequence) && charSequence.length() > 2) {
+                    bt_comment.setBackgroundColor(Color.parseColor("#FFB568"));
+                } else {
+                    bt_comment.setBackgroundColor(Color.parseColor("#D8D8D8"));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        dialog.show();
+    }
+
+
     private void initRecyclerView() {
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mEasyRecyclerView.setLayoutManager(layoutManager1);
         mEasyRecyclerView.setAdapter(mAdapter = new Adapter<String>(this, false) {
             @Override
@@ -163,27 +353,31 @@ public class RecruitmentDetailActivity extends BaseActivity implements IRecruitm
         tv_time.setText(recruitmentEntity.getCreateTime());
         tv_location.setText("位置：" + recruitmentEntity.getAreaList());
         tv_work_type.setText("工种：" + recruitmentEntity.getWorkType());
-        Glide.with(this).load(recruitmentEntity.getProfile()).into(riv_headImage);
+        Glide.with(this).applyDefaultRequestOptions(MyAppGlideModule.getRequestOptions()).load(recruitmentEntity.getProfile()).into(riv_headImage);
         tv_name.setText(recruitmentEntity.getUserName());
         phoneAll = recruitmentEntity.getPhone();
         String phone = phoneAll.substring(0, 3) + "****" + phoneAll.substring(7, phoneAll.length());
         tv_number.setText(phone);
         tv_detailed_description.setText(recruitmentEntity.getDescribe());
-        String[] split = recruitmentEntity.getLabels().split(",");
-        addviewlayout.removeAllViews();
-        for (int i = 0; i < split.length; i++) {
-            View viewItemParent = LayoutInflater.from(this).inflate(R.layout.item_dynamic_textview, addviewlayout, false);
-            addviewlayout.addView(viewItemParent);
-            final View viewItem = addviewlayout.getChildAt(i);
-            TextView mTaskTitle = viewItem.findViewById(R.id.tv_addview);
-            mTaskTitle.setText(split[i]);
+       /* if (!TextUtils.isEmpty(recruitmentEntity.getLabels())){
+            String[] split = recruitmentEntity.getLabels().split(",");
+            addviewlayout.removeAllViews();
+            for (int i = 0; i < split.length; i++) {
+                View viewItemParent = LayoutInflater.from(this).inflate(R.layout.item_dynamic_textview, addviewlayout, false);
+                addviewlayout.addView(viewItemParent);
+                final View viewItem = addviewlayout.getChildAt(i);
+                TextView mTaskTitle = viewItem.findViewById(R.id.tv_addview);
+                mTaskTitle.setText(split[i]);
+            }
+        }*/
+        if (TextUtils.isEmpty(recruitmentEntity.getApplyType()) || recruitmentEntity.getApplyType().equals("1")) {
+            iv_orders.setVisibility(View.GONE);
         }
-
         tv_look_number.setOnClickListener(new OnMultiClickListener() {
             @Override
             public void onMultiClick(View v) {
                 bannerType = 0;
-                bannerPresenter.queryBannerDataList(UserInfo.getCityCode(), "3","1");
+                bannerPresenter.queryBannerDataList(UserInfo.getCityCode(), "3", "1");
             }
         });
         tv_call_number.setOnClickListener(new OnMultiClickListener() {
@@ -192,14 +386,93 @@ public class RecruitmentDetailActivity extends BaseActivity implements IRecruitm
                 callPhone(phoneAll);
             }
         });
-
+        iv_orders.setOnClickListener(new OnMultiClickListener() {
+            @Override
+            public void onMultiClick(View v) {
+                if (mApp.isLoginToDialog()) {
+                    mApp.getLoadingDialog().show();
+                    recruitmentDetailPresenter.postApplyData(recruitmentEntity.getId());
+                }
+//                showCommentDialog();
+            }
+        });
         List<String> strings = DevicePermissionsUtils.stringToList(recruitmentEntity.getImags());
-        mAdapter.addAll(strings);
+        mAdapter.update(strings);
+    }
+    /**
+     * by moos on 2018/04/20
+     * func:弹出评论框
+     */
+    private void showCommentDialog(){
+        dialog = new BottomSheetDialog(this);
+        View commentView = LayoutInflater.from(this).inflate(R.layout.comment_dialog_layout,null);
+        final EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
+        final Button bt_comment = (Button) commentView.findViewById(R.id.dialog_comment_bt);
+        dialog.setContentView(commentView);
+        /**
+         * 解决bsd显示不全的情况
+         */
+        View parent = (View) commentView.getParent();
+        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
+        commentView.measure(0,0);
+        behavior.setPeekHeight(commentView.getMeasuredHeight());
 
+        bt_comment.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                String commentContent = commentText.getText().toString().trim();
+                if(!TextUtils.isEmpty(commentContent)){
+
+                    //commentOnWork(commentContent);
+                    dialog.dismiss();
+                    CommentDetailBean detailBean = new CommentDetailBean("小明", commentContent,"刚刚");
+                    adapter.addTheCommentData(detailBean);
+                    Toast.makeText(RecruitmentDetailActivity.this,"评论成功",Toast.LENGTH_SHORT).show();
+
+                }else {
+                    Toast.makeText(RecruitmentDetailActivity.this,"评论内容不能为空",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        commentText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(!TextUtils.isEmpty(charSequence) && charSequence.length()>2){
+                    bt_comment.setBackgroundColor(Color.parseColor("#FFB568"));
+                }else {
+                    bt_comment.setBackgroundColor(Color.parseColor("#D8D8D8"));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        dialog.show();
     }
 
     @Override
     public void queryRecruitmentDetailDataFail(String info) {
+        mApp.getLoadingDialog().hide();
+        mApp.shortToast(info);
+    }
+
+    @Override
+    public void postApplyDataSuccess() {
+        mApp.getLoadingDialog().hide();
+        mApp.shortToast("报名成功!");
+        iv_orders.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void postApplyDataFail(String info) {
         mApp.getLoadingDialog().hide();
         mApp.shortToast(info);
     }
@@ -216,6 +489,7 @@ public class RecruitmentDetailActivity extends BaseActivity implements IRecruitm
 
     @Override
     public void queryBannerDataListFail(int code, String msg) {
+        mApp.shortToast(msg);
     }
 
 
@@ -302,6 +576,7 @@ public class RecruitmentDetailActivity extends BaseActivity implements IRecruitm
             }
         }).load(url).into(mSwipeCaptchaView);
     }
+
     /**
      * 拨打电话（跳转到拨号界面，用户手动点击拨打）
      *

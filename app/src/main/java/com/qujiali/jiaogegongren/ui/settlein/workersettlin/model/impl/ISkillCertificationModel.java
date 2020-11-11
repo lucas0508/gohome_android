@@ -5,7 +5,7 @@ import com.qujiali.jiaogegongren.common.base.IBaseModel;
 public interface ISkillCertificationModel extends IBaseModel {
 
 
-    void sendSkillCertification(String name, String picture,OnCallbackListener onCallbackListener);
+    void sendSkillCertification(String name, String picture,String id,OnCallbackListener onCallbackListener);
 
 
 }

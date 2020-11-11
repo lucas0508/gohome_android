@@ -16,7 +16,7 @@ public class MyAppGlideModule extends AppGlideModule {
 
     public static RequestOptions getRequestOptions() {
         return new RequestOptions()
-                .placeholder(R.mipmap.common_head_picture)
-                .error(R.mipmap.common_head_picture);
+                .placeholder(R.mipmap.head_default)
+                .error(R.mipmap.head_default);
     }
 }

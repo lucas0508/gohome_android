@@ -2,6 +2,7 @@
 <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:spinner="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,21 +11,22 @@
 
     <com.scwang.smartrefresh.layout.header.ClassicsHeader
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="#fff"
             app:layout_scrollFlags="scroll">
 
 
             <LinearLayout
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -35,13 +37,14 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="15dp"
                     app:cardCornerRadius="15dp"
-                    app:cardElevation="6dp">
+                    app:cardElevation="6dp"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                     <ImageView
                         android:id="@+id/iv_banner"
                         android:layout_width="match_parent"
-                        android:scaleType="fitXY"
                         android:layout_height="140dp"
+                        android:scaleType="fitXY"
                         android:src="@mipmap/banner_default" />
 
 
@@ -76,51 +79,137 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="2dp"
-                        android:layout_marginBottom="2dp"
                         android:layout_marginRight="4dp"
+                        android:layout_marginBottom="2dp"
                         app:marqueeview_repet_type="repet_continuous"
+                        app:marqueeview_text_color="#666666"
                         app:marqueeview_text_size="15"
-                        app:marqueeview_text_speed="0.8"
-                        app:marqueeview_text_color="#666666"/>
+                        app:marqueeview_text_speed="0.8" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
+
             <LinearLayout
-                android:gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp"
-                android:padding="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="37dp">
 
-               <TextView
-                   android:id="@+id/chooseCity"
-                   android:maxLines="1"
-                   android:gravity="center"
-                   android:ellipsize="end"
-                   android:drawablePadding="4dp"
-                   android:drawableRight="@mipmap/icon_bottom"
-                   android:layout_width="90dp"
-                   android:textSize="14sp"
-                   android:layout_height="match_parent"/>
+                <TextView
+                    android:text="全部"
+                    android:layout_weight="1"
+                    android:id="@+id/chooseCity"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:drawableRight="@mipmap/icon_bottom"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:layout_marginEnd="20dp"
+                    android:textSize="14sp" />
 
-               <EditText
-                   android:id="@+id/et_search"
-                   android:hint="搜索"
-                   android:layout_marginLeft="10dp"
-                   android:background="@drawable/common_shape_round2_background_white_1"
-                   android:paddingStart="18dp"
-                   android:drawablePadding="8dp"
-                   android:textSize="14sp"
-                   android:drawableLeft="@mipmap/icon_search"
-                   android:layout_width="match_parent"
-                   android:layout_height="34dp"
-                   android:imeOptions="actionSearch"
-                   android:singleLine="true"/>
 
+                <View
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_width="1dp"
+                    android:background="#EEEEEE"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:id="@+id/tv_currentCity"
+                    android:layout_weight="1"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:text="当前城市"
+                    android:gravity="center"
+                    android:textColor="#ff078cee"
+                    android:textSize="14sp"
+                    />
+                <View
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_width="1dp"
+                    android:background="#EEEEEE"
+                    android:layout_height="match_parent"/>
+            <!--    <TextView
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:id="@+id/chooseHot"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:drawableRight="@mipmap/icon_bottom"
+                    android:ellipsize="end"
+                    android:text="热度排序"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:textSize="14sp" />-->
+
+                <lib.demo.spinner.MaterialSpinner
+                    android:id="@+id/chooseHot"
+                    android:layout_weight="1"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:textSize="14sp"
+                    android:text="热度排序"
+                    android:gravity="center"
+                    spinner:ms_background_color="@android:color/white"
+                    spinner:ms_popupwindow_height="wrap_content"
+                    spinner:ms_popupwindow_maxheight="200dp"/>
+
+                <!--                spinner:ms_text_color="@android:color/black"-->
+            </LinearLayout>
+            <View
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="match_parent"
+                android:background="#EEEEEE"
+                android:layout_height="1dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="6dp"
+
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical"
+                android:padding="4dp">
+
+                <TextView
+                    android:id="@+id/chooseTypeOfWork"
+                    android:layout_width="90dp"
+                    android:layout_height="match_parent"
+                    android:drawableRight="@mipmap/icon_bottom"
+                    android:drawablePadding="2dp"
+                    android:ellipsize="end"
+                    android:text="常用工种"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:background="@drawable/common_shape_round2_background_white_1"
+                    android:layout_weight="1"
+                    android:id="@+id/et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:layout_marginLeft="10dp"
+                    android:drawableLeft="@mipmap/icon_search"
+                    android:drawablePadding="8dp"
+                    android:hint="请输入工种"
+                    android:paddingStart="18dp"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:background="@drawable/common_shape_round_serch_blue"
+                    android:id="@+id/tv_search"
+                    android:textColor="@color/white"
+                    android:layout_width="60dp"
+                    android:layout_height="34dp"
+                    android:gravity="center"
+                    android:text="搜索" />
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -128,10 +217,27 @@
             android:id="@+id/recycler_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/fragment_home_item"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_anchor="@+id/recycler_home"
+            app:layout_anchorGravity="center"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/fragment_home_item">
+
+
+        </com.jude.easyrecyclerview.EasyRecyclerView>
+
+
+            <ImageView
+                app:layout_anchor="@id/recycler_home"
+                app:layout_anchorGravity="bottom|right"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/iv_singin"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="40dp"
+                android:src="@mipmap/singin" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
 
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

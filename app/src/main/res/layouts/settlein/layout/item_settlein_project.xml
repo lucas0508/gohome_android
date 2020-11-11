@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="4dp"
+    android:layout_marginStart="4dp"
     android:layout_marginTop="20dp"
     android:orientation="vertical"
     android:visibility="visible">
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="呼市地铁"
             android:textColor="#ff333333"
-            android:textSize="15sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_project_time"
@@ -28,7 +28,7 @@
             android:gravity="right"
             android:text="2019-08 — 2020-01"
             android:textColor="#ff999999"
-            android:textSize="12sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -39,7 +39,7 @@
         android:layout_marginTop="10dp"
         android:text="现场监理"
         android:textColor="#ff999999"
-        android:textSize="14sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_project_content"
@@ -50,7 +50,7 @@
             2、自我介绍自我介绍自我介绍自我介绍自我介绍自我介绍自我介绍自......
             3、自我介绍自我介绍自我介绍自我介绍自我介绍自我介绍自我介绍自......"
         android:textColor="#ff666666"
-        android:textSize="13sp" />
+        android:textSize="18sp" />
 
     <View
         android:id="@+id/line"

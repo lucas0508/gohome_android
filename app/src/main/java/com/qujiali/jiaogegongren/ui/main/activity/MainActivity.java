@@ -14,6 +14,7 @@ import com.qujiali.jiaogegongren.bean.VersionUpdateEntity;
 import com.qujiali.jiaogegongren.common.base.ActivityManager;
 import com.qujiali.jiaogegongren.common.base.BaseActivity;
 import com.qujiali.jiaogegongren.common.cache.SharedPreferences.UserInfo;
+import com.qujiali.jiaogegongren.common.dialog.ConfirmAgreementDialog;
 import com.qujiali.jiaogegongren.common.dialog.ConfirmDialog;
 import com.qujiali.jiaogegongren.common.dialog.DialogManage;
 import com.qujiali.jiaogegongren.common.dialog.VersionUpdateDialog;
@@ -21,7 +22,9 @@ import com.qujiali.jiaogegongren.common.model.CustomScrollViewPager;
 import com.qujiali.jiaogegongren.common.server.LocationService;
 import com.qujiali.jiaogegongren.common.utils.CompareVersions;
 import com.qujiali.jiaogegongren.common.utils.DevicePermissionsUtils;
+import com.qujiali.jiaogegongren.common.utils.PreferenceUtil;
 import com.qujiali.jiaogegongren.common.utils.ToastUtils;
+import com.qujiali.jiaogegongren.ui.callphone.view.CallPhoneFragment;
 import com.qujiali.jiaogegongren.ui.main.fragment.presenter.VersionUpdatePresenter;
 import com.qujiali.jiaogegongren.ui.main.fragment.view.HomePageFragment;
 import com.qujiali.jiaogegongren.ui.main.fragment.view.IVersionUpdateView;
@@ -50,11 +53,30 @@ public class MainActivity extends BaseActivity implements IVersionUpdateView {
     protected void initView() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mApp = new DialogManage(this);
-
+        initPermission();
         versionUpdatePresenter.updateVersion();
         initViewPager();
     }
+    public void initPermission() {
+        requestRunPermission(DevicePermissionsUtils.autoObtainNeedAllPermission(this), new BaseActivity.PermissionListener() {
+            @Override
+            public void onGranted() {
+                Logger.d("权限允许--cityCode->" + UserInfo.getCityCode());
+                if (UserInfo.getCityCode() == null || UserInfo.getCityCode().equals("")) {
+                    Intent service = new Intent(MainActivity.this, LocationService.class);
+                    startService(service);
+                }
+            }
 
+            @Override
+            public void onDenied(List<String> deniedPermission) {
+                Logger.d("权限拒绝");
+                initPermission();
+                //userRefusePermissionsDialog();
+            }
+        });
+
+    }
     @Override
     protected int setLayoutResourceID() {
         return R.layout.activity_main;
@@ -63,12 +85,14 @@ public class MainActivity extends BaseActivity implements IVersionUpdateView {
     private void initViewPager() {
         fragmentList.add(new HomePageFragment());
         fragmentList.add(new RecruitmentFragment());
+        fragmentList.add(new CallPhoneFragment());
         fragmentList.add(new MineFragment());
         mAdapter = new MainViewPagerAdapter(getSupportFragmentManager(), fragmentList);
         mViewPager.setAdapter(mAdapter);
     }
 
-    @OnClick({R.id.rb_tab_menu_homepage, R.id.rb_tab_menu_material, R.id.rb_tab_menu_mypage})
+    @OnClick({R.id.rb_tab_menu_homepage, R.id.rb_tab_menu_material,
+            R.id.rb_tab_menu_mypage,R.id.rb_tab_menu_callWorker})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rb_tab_menu_homepage:
@@ -77,13 +101,17 @@ public class MainActivity extends BaseActivity implements IVersionUpdateView {
             case R.id.rb_tab_menu_material:
                 mViewPager.setCurrentItem(1);
                 break;
-            case R.id.rb_tab_menu_mypage:
+            case R.id.rb_tab_menu_callWorker:
                 mViewPager.setCurrentItem(2);
+                break;
+            case R.id.rb_tab_menu_mypage:
+                mViewPager.setCurrentItem(3);
                 break;
             default:
                 break;
         }
     }
+
 
 
     /**
@@ -165,18 +193,4 @@ public class MainActivity extends BaseActivity implements IVersionUpdateView {
     }
 
 
-//    @Override
-//    public void updateVersionSuccess(Map<String, String> data, long timestamp) {
-//        mApp.getLoadingDialog().hide();
-//        if (CompareVersions.compare(data.get("minorVersion"), DevicePermissionsUtils.getAppCurrentVersion())) {
-//            VersionUpdateDialog versionUpdateDialog = new VersionUpdateDialog(MainActivity.this);
-//            versionUpdateDialog.showNoticeDialog(data.get("minorVersion"), data.get("status"), data.get("downloadUrl"));
-//        }
-//    }
-
-//    @Override
-//    public void updateVersionFail(String info) {
-//        mApp.getLoadingDialog().hide();
-//        mApp.Toast(info);
-//    }
 }

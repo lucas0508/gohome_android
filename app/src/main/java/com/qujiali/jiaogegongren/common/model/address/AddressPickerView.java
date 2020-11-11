@@ -37,7 +37,7 @@ public class AddressPickerView extends RelativeLayout implements View.OnClickLis
     private int defaultSureCanClickColor = Color.parseColor("#50AA00");
 
     private Context mContext;
-    private int defaultTabCount = 3; //tab 的数量
+    private int defaultTabCount = 2; //tab 的数量
     private TabLayout mTabLayout; // tabLayout
     private RecyclerView mRvList; // 显示数据的RecyclerView
     private String defaultProvince = "省份"; //显示在上面tab中的省份
@@ -52,13 +52,14 @@ public class AddressPickerView extends RelativeLayout implements View.OnClickLis
     private YwpAddressBean.AddressItemBean mSelectCity;//选中 城市  bean
     private YwpAddressBean.AddressItemBean mSelectDistrict;//选中 区县  bean
     private int mSelectProvicePosition = 0; //选中 省份 位置
+
     private int mSelectCityPosition = 0;//选中 城市  位置
     private int mSelectDistrictPosition = 0;//选中 区县  位置
     boolean isSelect = false;
     private OnAddressPickerSureListener mOnAddressPickerSureListener;
     private TextView mTvSure; //确定
 
-    public AddressPickerView(Context context) {
+    public AddressPickerView(Context context ) {
         super(context);
         init(context);
     }
@@ -89,7 +90,6 @@ public class AddressPickerView extends RelativeLayout implements View.OnClickLis
         mTabLayout = (TabLayout) rootView.findViewById(R.id.tlTabLayout);
         mTabLayout.addTab(mTabLayout.newTab().setText(defaultProvince));
         mTabLayout.addTab(mTabLayout.newTab().setText(defaultCity));
-
         mTabLayout.addTab(mTabLayout.newTab().setText(defaultDistrict));
 
         mTabLayout.addOnTabSelectedListener(tabSelectedListener);
@@ -100,12 +100,12 @@ public class AddressPickerView extends RelativeLayout implements View.OnClickLis
         mAdapter = new AddressAdapter();
         mRvList.setAdapter(mAdapter);
         // 初始化默认的本地数据  也提供了方法接收外面数据
-        mRvList.post(new Runnable() {
-            @Override
-            public void run() {
-                initData();
-            }
-        });
+//        mRvList.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                initData();
+//            }
+//        });
     }
 
 
@@ -150,6 +150,23 @@ public class AddressPickerView extends RelativeLayout implements View.OnClickLis
         }
     }
 
+    /**
+     * 开放给外部传入数据
+     * 暂时就用这个Bean模型，如果数据不一致就需要各自根据数据来生成这个bean了
+     */
+    public void initData(YwpAddressBean bean, int defaultTabCount) {
+        if (bean != null) {
+            mSelectDistrict = null;
+            mSelectCity = null;
+            mSelectProvice = null;
+            this.defaultTabCount = defaultTabCount;
+            mTabLayout.getTabAt(0).select();
+            mYwpAddressBean = bean;
+            mRvData.clear();
+            mRvData.addAll(mYwpAddressBean.getProvince());
+            mAdapter.notifyDataSetChanged();
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -316,8 +333,8 @@ public class AddressPickerView extends RelativeLayout implements View.OnClickLis
                             mSelectCityPosition = 0;
                             mSelectDistrictPosition = 0;
                             mTabLayout.getTabAt(1).setText(defaultCity);
-                            if (isSelect){
-                                defaultDistrict="区县（可不限）";
+                            if (isSelect) {
+                                defaultDistrict = "区县（可不限）";
                             }
                             mTabLayout.getTabAt(2).setText(defaultDistrict);
                             // 设置这个对应的标题
@@ -333,8 +350,8 @@ public class AddressPickerView extends RelativeLayout implements View.OnClickLis
                             // 清空后面一个的数据
                             mSelectDistrict = null;
                             mSelectDistrictPosition = 0;
-                            if (isSelect){
-                                defaultDistrict="区县（可不限）";
+                            if (isSelect) {
+                                defaultDistrict = "区县（可不限）";
                             }
                             mTabLayout.getTabAt(2).setText(defaultDistrict);
                             // 设置这个对应的标题

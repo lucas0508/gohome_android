@@ -1,58 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     app:cardCornerRadius="6dp"
-    app:cardElevation="4dp"
-    android:orientation="vertical">
+    app:cardElevation="4dp">
 
     <LinearLayout
-        android:layout_margin="16dp"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp">
 
-        <ImageView
-            android:id="@+id/iv_image"
-            android:scaleType="centerCrop"
-            android:layout_width="110dp"
-            android:layout_height="62dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_marginStart="6dp"
+            <ImageView
+                android:id="@+id/iv_image"
+                android:layout_width="110dp"
+                android:layout_height="62dp"
+                android:scaleType="centerCrop" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="10dp">
+
+                <TextView
+                    android:id="@+id/tv_skill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="高级木工技能证"
+                    android:textColor="#ff333333"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="待审核"
+                    android:textColor="#fffc8419"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_skill"
+                    android:layout_marginTop="6dp"
+                    android:text="2020-05-14"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:visibility="gone"
+            android:id="@+id/view_refuseReason"
+            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DDDDDD"/>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_refuseReason"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="10dp">
+            android:text="拒绝原因：请上传相关技能证书照片，图片需清晰可辨辨识相关证书类型、证书信息等。"
+            android:textColor="#ff666666"
+            android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/tv_skill"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="高级木工技能证"
-                android:textColor="#ff333333"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tv_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="待审核"
-                android:textColor="#fffc8419"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_skill"
-                android:layout_marginTop="6dp"
-                android:text="2020-05-14"
-                android:textColor="#ff999999"
-                android:textSize="12sp" />
-        </RelativeLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -24,10 +24,10 @@ package com.qujiali.jiaogegongren.common.model.widget;
  */
 public interface OnWheelChangedListener {
 	/**
-	 * Callback method to be invoked when current item changed
+	 * Callback method to be invoked when current item_quotaion_title changed
 	 * @param wheel the wheel view whose state has changed
-	 * @param oldValue the old value of current item
-	 * @param newValue the new value of current item
+	 * @param oldValue the old value of current item_quotaion_title
+	 * @param newValue the new value of current item_quotaion_title
 	 */
 	void onChanged(WheelView wheel, int oldValue, int newValue);
 }

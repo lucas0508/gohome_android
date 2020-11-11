@@ -31,6 +31,18 @@ public class RecruitmentDetailPresenter extends BasePresenter {
                 }
             }
         });
+    }
 
+    public void postApplyData(int id) {
+        iRecruitmentDetailModel.postApplyData(id, new IBaseModel.OnCallbackListener() {
+            @Override
+            public void callback(ResponseEntity res) {
+                if (HttpProvider.isSuccessful(res.getCode())) {
+                    iRecruitmentDetailView.postApplyDataSuccess();
+                } else {
+                    iRecruitmentDetailView.postApplyDataFail(res.getMsg());
+                }
+            }
+        });
     }
 }

@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -20,6 +21,8 @@ import com.qujiali.jiaogegongren.common.base.BaseActivity;
 import com.qujiali.jiaogegongren.common.base.MyAppGlideModule;
 import com.qujiali.jiaogegongren.common.base.OnMultiClickListener;
 import com.qujiali.jiaogegongren.common.cache.SharedPreferences.UserInfo;
+import com.qujiali.jiaogegongren.common.dialog.DateWheelPicker2;
+import com.qujiali.jiaogegongren.common.dialog.DialogUtil;
 import com.qujiali.jiaogegongren.common.dialog.SelectPicDialog;
 import com.qujiali.jiaogegongren.common.dialog.SelectSexDialog;
 import com.qujiali.jiaogegongren.common.model.RoundImageView;
@@ -31,6 +34,7 @@ import com.qujiali.jiaogegongren.ui.main.fragment.view.ILogOutView;
 import com.qujiali.jiaogegongren.ui.main.fragment.view.IMineFragmentView;
 import com.qujiali.jiaogegongren.ui.other.presenter.UploadFilePresenter;
 import com.qujiali.jiaogegongren.ui.other.view.IUploadFileView;
+import com.qujiali.jiaogegongren.ui.settlein.workersettlin.view.PerfectInformationActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -111,7 +115,7 @@ public class PersonalActivity extends BaseActivity implements IMineFragmentView,
         ll_person_birthday.setOnClickListener(new OnMultiClickListener() {
             @Override
             public void onMultiClick(View v) {
-                chooseBirthday();
+                ChooseBirthday();
             }
         });
         if (!TextUtils.isEmpty(et__person_phone.getText().toString())) {
@@ -142,23 +146,22 @@ public class PersonalActivity extends BaseActivity implements IMineFragmentView,
             }
         });
     }
-
-    private void chooseBirthday() {
-        Calendar calendar = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+    private void ChooseBirthday(){
+        DateWheelPicker2 picker= new DateWheelPicker2(PersonalActivity.this);
+        picker.setMaxDate(Calendar.getInstance().getTimeInMillis());
+        picker.setOnDateChangedListener(new DateWheelPicker2.OnDateChangedListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                //选择时间之后的回掉方法，可以获取年月日
-                tv__person_birthday.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
-                int mMoth = month + 1;
+            public void onDateChanged(DateWheelPicker2 view, int year, int monthOfYear, int dayOfMonth) {
+                tv__person_birthday.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
             }
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONDAY), calendar.get(Calendar.DAY_OF_MONTH));//1990，0，01分别是默认显示的年，月，日的数据，其中的月份是从0开始的，所以一月份为0；
-        //设置日期的范围
-        DatePicker datePicker = datePickerDialog.getDatePicker();
-        datePicker.setMaxDate(new Date().getTime());//设置日期的上限日期
-        //datePicker.setMinDate(...);//设置日期的下限日期，其中是参数类型是long型，为日期的时间戳
-        datePickerDialog.show();
+        });
+        showDialog("请选择出生日期", picker);
     }
+
+    private void showDialog(String title, View v) {
+        DialogUtil.showDialog(PersonalActivity.this, title, v);
+    }
+
 
     private void submit() {
         mApp.getLoadingDialog().show();
@@ -195,7 +198,7 @@ public class PersonalActivity extends BaseActivity implements IMineFragmentView,
         tv__person_gender.setText(userInfoEntity.getSexText());
         tv__person_birthday.setText(userInfoEntity.getBirthday());
 
-        if (!TextUtils.isEmpty(userInfoEntity.getPhone())){
+       /* if (!TextUtils.isEmpty(userInfoEntity.getPhone())){
             et__person_phone.setFocusable(false);
         }
         if(!TextUtils.isEmpty(userInfoEntity.getBirthday())){
@@ -203,7 +206,7 @@ public class PersonalActivity extends BaseActivity implements IMineFragmentView,
         }
         if(!TextUtils.isEmpty(userInfoEntity.getSexText())){
             ll__person_gender.setOnClickListener(null);
-        }
+        }*/
     }
 
     @Override

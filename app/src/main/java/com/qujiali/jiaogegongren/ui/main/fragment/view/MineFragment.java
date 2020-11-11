@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.orhanobut.logger.Logger;
 import com.qujiali.jiaogegongren.GoHomeApplication;
 import com.qujiali.jiaogegongren.R;
 import com.qujiali.jiaogegongren.bean.CompanyEntity;
@@ -96,6 +95,7 @@ public class MineFragment extends BaseFragment implements IMineFragmentView, ISe
             tv_login_name.setText("去登录");
             riv_login_headImage.setBackgroundResource(R.mipmap.common_head_picture);
         }*/
+
     }
 
     private void initData() {
@@ -182,7 +182,7 @@ public class MineFragment extends BaseFragment implements IMineFragmentView, ISe
     public void getUserInfoSuccess(UserInfoEntity userInfoEntity) {
         tv_login_name.setText(userInfoEntity.getName());
         Glide.with(GoHomeApplication.getContext()).applyDefaultRequestOptions(new RequestOptions()
-                .error(R.mipmap.common_head_picture))
+                .error(R.mipmap.head_default))
                 .load(userInfoEntity.getProfile()).into(riv_login_headImage);
         UserInfo.setUserImage(userInfoEntity.getProfile());
         UserInfo.setUserPhone(userInfoEntity.getPhone());
@@ -193,7 +193,7 @@ public class MineFragment extends BaseFragment implements IMineFragmentView, ISe
     public void getUserInfoFail(String info, int code) {
         if (code == 401) {
             tv_login_name.setText("去登录");
-            Glide.with(GoHomeApplication.getContext()).load(R.mipmap.common_head_picture).into(riv_login_headImage);
+            Glide.with(GoHomeApplication.getContext()).load(R.mipmap.head_default).into(riv_login_headImage);
         } else {
             mApp.shortToast(info);
         }

@@ -16,7 +16,7 @@
     </item>
 
     <!-- 倒三角 -->
-<!--    <item>-->
+<!--    <item_quotaion_title>-->
 <!--        <rotate-->
 <!--            android:fromDegrees="45"-->
 <!--            android:pivotX="135%"-->
@@ -28,5 +28,5 @@
 <!--                <solid android:color="#7d72ff" />-->
 <!--            </shape>-->
 <!--        </rotate>-->
-<!--    </item>-->
+<!--    </item_quotaion_title>-->
 </layer-list>

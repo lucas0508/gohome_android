@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="4dp" />
 
-    <WebView
+    <com.qujiali.jiaogegongren.common.model.CustomWebView
         android:id="@+id/wv_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"

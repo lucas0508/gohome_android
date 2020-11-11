@@ -101,8 +101,6 @@ public class SkillIntroductionEnterpriseActivity extends BaseActivity implements
 
         Logger.d("原始数据:" + mPathList);
 
-
-
         mUploadPathList = new ArrayList<>();
         mPostPathList= new ArrayList<>();
         for (String image : mPathList) {

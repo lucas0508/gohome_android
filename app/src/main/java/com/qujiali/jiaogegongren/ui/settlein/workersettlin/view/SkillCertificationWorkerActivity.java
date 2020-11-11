@@ -3,6 +3,7 @@ package com.qujiali.jiaogegongren.ui.settlein.workersettlin.view;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.qujiali.jiaogegongren.GoHomeApplication;
 import com.qujiali.jiaogegongren.R;
+import com.qujiali.jiaogegongren.bean.SkillCertificationEntity;
 import com.qujiali.jiaogegongren.common.base.BaseActivity;
 import com.qujiali.jiaogegongren.common.base.MyAppGlideModule;
 import com.qujiali.jiaogegongren.common.base.OnMultiClickListener;
@@ -50,6 +52,7 @@ public class SkillCertificationWorkerActivity extends BaseActivity implements IS
     @BindView(R.id.riv_Image)
     RoundImageView riv_Image;
     private String imageUrlPath = "";
+    private String id="";
 
     @Override
     protected int setLayoutResourceID() {
@@ -60,6 +63,20 @@ public class SkillCertificationWorkerActivity extends BaseActivity implements IS
     protected void initView() {
         mTitle.setText("技能认证");
         mCommonRight.setText("确定");
+
+
+        Intent intent = getIntent();
+
+        if (null != intent) {
+            SkillCertificationEntity item = getIntent().getParcelableExtra("item");
+            if (null != item) {
+                et_certification_name.setText(item.getName());
+                Glide.with(this).load(item.getPictrues()).into(riv_Image);
+                imageUrlPath = item.getPictrues();
+                id = String.valueOf(item.getId());
+            }
+        }
+
         mCommonRight.setOnClickListener(new OnMultiClickListener() {
             @Override
             public void onMultiClick(View v) {
@@ -86,7 +103,6 @@ public class SkillCertificationWorkerActivity extends BaseActivity implements IS
     }
 
     private void postData() {
-
         if (TextUtils.isEmpty(et_certification_name.getText().toString().trim())) {
             mApp.shortToast("请输入技能证书简称");
             return;
@@ -96,10 +112,14 @@ public class SkillCertificationWorkerActivity extends BaseActivity implements IS
             return;
         }
         mApp.getLoadingDialog().show();
-        List<String> strings = new ArrayList<>();
-        strings.add(imageUrlPath);
-        uploadFilePresenter.uploadMultipleImage(strings);
 
+        if (imageUrlPath.contains("http")) {
+            skillCertificationPresenter.sendSkillCertification(et_certification_name.getText().toString().trim(), imageUrlPath, id);
+        } else {
+            List<String> strings = new ArrayList<>();
+            strings.add(imageUrlPath);
+            uploadFilePresenter.uploadMultipleImage(strings);
+        }
     }
 
 
@@ -162,7 +182,7 @@ public class SkillCertificationWorkerActivity extends BaseActivity implements IS
 
     @Override
     public void UploadMultipleFileSuccess(List<String> strings) {
-        skillCertificationPresenter.sendSkillCertification(et_certification_name.getText().toString().trim(), strings.get(0));
+        skillCertificationPresenter.sendSkillCertification(et_certification_name.getText().toString().trim(), strings.get(0),id);
     }
 
     @Override

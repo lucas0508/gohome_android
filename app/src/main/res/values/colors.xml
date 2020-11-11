@@ -13,7 +13,7 @@
     <color name="color_tabbar">#000000</color>
     <color name="color_tabbarActive">#2d8cf0</color>
     <!-- 蓝色 -->
-    <color name="blue">#2EA2E4</color>
+    <color name="blue">#0498f5</color>
     <!-- 绿色 -->
     <color name="green">#0dab61</color>
     <!-- 白色 -->
@@ -62,4 +62,14 @@
     <color name="view1_bg">#d2d2d2</color>
 
     <color name="bg_loading">#f0f0f3</color>
+
+    <color name="dialogButtonPressed">#115f5f5f</color>
+    <color name="dialogTitle">#5F5F5F</color>
+
+    <color name="cp_color_gray_light">#cdcdcd</color>
+    <color name="cp_color_gray">#999999</color>
+    <color name="cp_color_gray_deep">#666666</color>
+    <color name="cp_color_gray_dark">#333333</color>
+    <color name="cp_color_section_bg">#EDEDED</color>
+    <color name="cp_color_grid_item_bg">#f5f5f5</color>
 </resources>

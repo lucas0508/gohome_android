@@ -1,55 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/white">
 
     <include
         android:id="@+id/include"
         layout="@layout/base_title_layout" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:contentDescription="TODO"
-        android:src="@mipmap/logo_prject"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
-
-    <TextView
-        android:id="@+id/textView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="24dp"
-        android:textSize="16sp"
-        android:text="      叫个工人是款不错的生活服务软件，功能比较全，无论你是雇主，还是工人都能使用哦，常用工种比较全，直接在线选择即可，需要就来使用吧。
-     足不出户，就近招工：基于移动端定位，实现以地理位置为基础的信息匹配，招工再也不用四处奔波，为用户呈现真正高效便捷的招工体验。
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="TODO"
+                android:src="@mipmap/logo_prject"
+               />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="24dp"
+                android:textSize="16sp"
+                android:text="\u3000\u3000“叫个工人”服务平台，是为本地家居生活提供招工用工服务的专业互联网平台。是一家全方位、多渠道、综合性的高效智能平台。有平台，有保障，用工更安心！\n
+\u3000\u3000“叫个工人”与全国多家有正规资质的家装家政公司紧密合作，且有海量的工人为基数，借助互联网技术，可收集全国各地的订单并且安全实时地派发给本地工人手中。本平台专注于家政、家装及企业用工的服务，为工人找工作，为客户全心全意排忧解难，实现双赢！\n
+\u3000\u3000“叫个工人”服务平台特点：\n
+1、稳定：随时随地都可接单，人工指派，优化行业，拥有客户的好评即可享受稳定的订单来源和收入。\n
+2、双赢：工程项目招聘工人，工人找项目，提供了双向选择的平台。\n
+3、客服：专业、负责、耐心的客服引导，解决您的后顾之忧。"
+                android:textColor="#343434"
+               />
 
 
-互评体系，质量保障：完善的互评体系，用事实评价体现工人的能力与口碑，打造的真实、领先的行业服务。"
-        android:textColor="#343434"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="30dp"
+                android:text="反馈邮箱：2355533450@qq.com\n客服热线：400-0555-065"
+                android:textColor="#ff9a9a9a"
+                android:layout_marginBottom="24dp"
+                android:textSize="16sp" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="30dp"
-        android:text="反馈邮箱：2355533450@qq.com\n客服热线：400-0555-065"
-        android:textColor="#ff9a9a9a"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

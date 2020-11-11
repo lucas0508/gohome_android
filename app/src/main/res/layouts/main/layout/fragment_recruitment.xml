@@ -8,18 +8,85 @@
 
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/layout_aspect_ratio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white">
+
             <include layout="@layout/base_title_layout" />
 
         </com.google.android.material.appbar.AppBarLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp">
+
+            <TextView
+                android:id="@+id/chooseCity"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:drawableRight="@mipmap/icon_bottom"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="全部"
+                android:textSize="14sp" />
+
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:background="#EEEEEE" />
+
+
+            <TextView
+                android:id="@+id/tv_currentCity"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="当前城市"
+                android:textColor="#ff078cee"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:background="#EEEEEE" />
+
+            <TextView
+                android:id="@+id/tv_related_to_me"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="与我相关"
+                android:textSize="14sp" />
+
+            <!--                spinner:ms_text_color="@android:color/black"-->
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="#EEEEEE" />
 
         <LinearLayout
             android:id="@+id/ll_search"
@@ -32,33 +99,32 @@
             android:paddingStart="15dp"
             android:paddingEnd="15dp">
 
-            <TextView
-                android:id="@+id/chooseCity"
-                android:maxLines="1"
-                android:textSize="14sp"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:drawableRight="@mipmap/icon_bottom"
-                android:drawablePadding="4dp"
-                android:gravity="center"
-                android:ellipsize="end" />
 
             <EditText
                 android:id="@+id/et_search"
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
                 android:layout_marginLeft="10dp"
+                android:layout_weight="1"
                 android:background="@drawable/common_shape_round2_background_white_1"
                 android:drawableLeft="@mipmap/icon_search"
                 android:drawablePadding="8dp"
-                android:hint="搜索"
-                android:textSize="14sp"
-                android:imeOptions="actionSearch"
-                android:paddingStart="10dp"
-                android:singleLine="true" />
+                android:hint="请输入工种"
+                android:paddingStart="18dp"
+                android:singleLine="true"
+                android:textSize="14sp" />
 
+            <TextView
+                android:id="@+id/tv_search"
+                android:layout_width="60dp"
+                android:layout_height="34dp"
+                android:background="@drawable/common_shape_round_serch_blue"
+                android:gravity="center"
+                android:text="搜索"
+                android:textColor="@color/white" />
 
         </LinearLayout>
+
 
         <com.jude.easyrecyclerview.EasyRecyclerView
             android:id="@+id/recycler"
@@ -72,11 +138,11 @@
 
     <ImageView
         android:id="@+id/iv_release"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="40dp"
         android:src="@mipmap/release" />
 
 </RelativeLayout>

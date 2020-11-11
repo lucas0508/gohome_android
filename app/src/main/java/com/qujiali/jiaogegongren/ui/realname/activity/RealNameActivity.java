@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
 import com.qujiali.jiaogegongren.GoHomeApplication;
 import com.qujiali.jiaogegongren.R;
 import com.qujiali.jiaogegongren.bean.RealNameEntity;
@@ -102,13 +105,16 @@ public class RealNameActivity extends BaseActivity implements IRealNameView, IUp
             return;
         }
         if (TextUtils.isEmpty(id_card_back)) {
-            mApp.shortToast("请上传身份证正面照");
+            mApp.shortToast("请上传身份证背面照");
             return;
         }
         List<String> strings = new ArrayList<>();
-
-        strings.add(id_card_front);
-        strings.add(id_card_back);
+        if (!id_card_front.contains("http")) {
+            strings.add(id_card_front);
+        }
+        if (!id_card_back.contains("http")) {
+            strings.add(id_card_back);
+        }
         mApp.getLoadingDialog().show();
         uploadFilePresenter.uploadMultipleImage(strings);
     }
@@ -157,6 +163,9 @@ public class RealNameActivity extends BaseActivity implements IRealNameView, IUp
                     tv_denial_reason.setText(realNameEntity.getRefuseReason());
                 }
             }
+
+            id_card_front = realNameEntity.getPictureOne();
+            id_card_back = realNameEntity.getPictureTwo();
             Glide.with(RealNameActivity.this).applyDefaultRequestOptions(new RequestOptions().centerCrop()).load(realNameEntity.getPictureOne()).into(iv_id_card_front);
             Glide.with(RealNameActivity.this).applyDefaultRequestOptions(new RequestOptions().centerCrop()).load(realNameEntity.getPictureTwo()).into(iv_id_card_back);
 
@@ -192,6 +201,7 @@ public class RealNameActivity extends BaseActivity implements IRealNameView, IUp
                                         id_card_front = file.getAbsolutePath();
                                         Glide.with(RealNameActivity.this).applyDefaultRequestOptions(new RequestOptions().centerCrop()).load(uri.getPath()).into(iv_id_card_front);
                                     } else if (type == 1) {
+
                                         id_card_back = file.getAbsolutePath();
                                         Glide.with(RealNameActivity.this).applyDefaultRequestOptions(new RequestOptions().centerCrop()).load(uri.getPath()).into(iv_id_card_back);
                                     }
@@ -199,6 +209,7 @@ public class RealNameActivity extends BaseActivity implements IRealNameView, IUp
                                     e.printStackTrace();
                                 }
                             }
+
                             @Override
                             public void onError(Throwable e) {
                                 e.printStackTrace();
@@ -216,7 +227,13 @@ public class RealNameActivity extends BaseActivity implements IRealNameView, IUp
 
     @Override
     public void UploadMultipleFileSuccess(List<String> strings) {
-        mRealNamePresenter.uploadCertificationInfo(strings.get(0), strings.get(1));
+        if (!id_card_front.contains("http")) {
+            id_card_front = strings.get(0);
+        }
+        if (!id_card_back.contains("http")) {
+            id_card_back = strings.get(1);
+        }
+        mRealNamePresenter.uploadCertificationInfo(id_card_front, id_card_back);
     }
 
     @Override
@@ -225,3 +242,9 @@ public class RealNameActivity extends BaseActivity implements IRealNameView, IUp
         mApp.getLoadingDialog().hide();
     }
 }
+
+
+
+
+
+

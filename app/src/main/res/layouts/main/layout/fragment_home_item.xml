@@ -108,7 +108,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/common_head_picture"
+                    android:src="@mipmap/head_default"
                     app:type="circle" />
 
                 <TextView
@@ -149,18 +149,22 @@
                     android:background="#068BEE"
                     android:textColor="#ffffffff"
                     android:textSize="12sp" />
-
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"/>
                 <TextView
-                    android:id="@+id/tv_home_technicalAbility"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    android:gravity="right"
+                    android:id="@+id/tv_home_attention"
+                    android:drawableLeft="@mipmap/icon_hot"
+                    android:visibility="visible"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
                     android:layout_marginLeft="4dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="学徒工"
-                    android:textColor="#ff333333"
-                    android:textSize="10sp"/>
+                    android:text="50人"
+                    android:textColor="#FF9900"
+                    android:textSize="14sp"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -174,7 +178,6 @@
             android:layout_gravity="right"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:background="@drawable/background_shape_task"
             android:textColor="@color/white"
             android:textSize="13sp" />
     </RelativeLayout>

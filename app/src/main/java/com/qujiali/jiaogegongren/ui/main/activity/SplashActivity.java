@@ -69,6 +69,7 @@ public class SplashActivity extends BaseActivity implements IBannerView {
     @Override
     protected void initView() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        mHandler = new Handler();
         initPermission();
         mCache = ACache.get(this);
         ButterKnife.bind(this);
@@ -116,12 +117,12 @@ public class SplashActivity extends BaseActivity implements IBannerView {
        requestRunPermission(DevicePermissionsUtils.autoObtainNeedAllPermission(this), new BaseActivity.PermissionListener() {
             @Override
             public void onGranted() {
-                mHandler = new Handler();
                 Logger.d("权限允许--cityCode->" +UserInfo.getCityCode());
                 if (UserInfo.getCityCode() == null || UserInfo.getCityCode().equals("")) {
                     Intent service = new Intent(SplashActivity.this, LocationService.class);
                     startService(service);
                 }
+
                 if (isFirst){
                     mApp.getConfirmAgreementDialog().show("服务协议和隐私政策", new ConfirmAgreementDialog.ConfirmCallback() {
                         @Override
@@ -140,7 +141,6 @@ public class SplashActivity extends BaseActivity implements IBannerView {
                     mTimeView.setVisibility(View.VISIBLE);
                     descTime();
                 }
-
                 mTimeView.setOnClickListener(v -> goToOtherPage());
             }
 
@@ -149,8 +149,29 @@ public class SplashActivity extends BaseActivity implements IBannerView {
                 Logger.d("权限拒绝");
                 //initPermission();
                 //userRefusePermissionsDialog();
+
+                if (isFirst){
+                    mApp.getConfirmAgreementDialog().show("服务协议和隐私政策", new ConfirmAgreementDialog.ConfirmCallback() {
+                        @Override
+                        public void onOk() {
+                            PreferenceUtil.put("isFirst",false);
+                            mTimeView.setVisibility(View.VISIBLE);
+                            descTime();
+                        }
+
+                        @Override
+                        public void onCancel() {
+                            ActivityManager.getInstance().kill();
+                        }
+                    });
+                }else {
+                    mTimeView.setVisibility(View.VISIBLE);
+                    descTime();
+                }
+                mTimeView.setOnClickListener(v -> goToOtherPage());
             }
         });
+
     }
 
 

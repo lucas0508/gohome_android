@@ -16,8 +16,8 @@ public class SkillCertificationPresenter extends BasePresenter {
         this.iSkillCertificationView = iSkillCertificationView;
     }
 
-    public void  sendSkillCertification(String name ,String picture){
-        iSkillCertificationModel.sendSkillCertification(name,picture,res -> {
+    public void  sendSkillCertification(String name ,String picture,String id){
+        iSkillCertificationModel.sendSkillCertification(name,picture,id,res -> {
             if (HttpProvider.isSuccessful(res.getCode())){
                 iSkillCertificationView.sendSkillCertificationSuccess();
             }else {

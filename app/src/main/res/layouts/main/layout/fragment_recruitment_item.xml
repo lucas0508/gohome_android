@@ -3,41 +3,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    app:cardCornerRadius="10dp"
-    android:layout_height="wrap_content">
+    app:cardCornerRadius="10dp">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="8dp"
             android:orientation="vertical">
 
             <LinearLayout
-                android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp">
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical">
 
                 <com.qujiali.jiaogegongren.common.model.RoundImageView
                     android:id="@+id/riv_headImage"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/common_head_picture"
+                    android:src="@mipmap/head_default"
                     app:type="circle" />
 
                 <TextView
                     android:id="@+id/tv_home_name"
-                    android:layout_marginLeft="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
                     android:text="王铁锤"
                     android:textColor="#ff666666"
                     android:textSize="12sp" />
@@ -45,14 +46,13 @@
 
                 <TextView
                     android:id="@+id/tv_time"
-                    android:gravity="right"
-                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
                     android:text="2020-05-14  12:48:28"
                     android:textColor="#ff999999"
-                    android:textSize="12sp"
-                    />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -62,16 +62,33 @@
                 android:layout_marginTop="2dp"
                 android:background="#DDDDDD" />
 
-            <TextView
-                android:layout_marginTop="4dp"
-                android:id="@+id/tv_home_title"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="电焊维修，水水电改装水电改装水电改装水电改装电改装，各种家装问题"
-                android:textColor="#ff333333"
-                android:textSize="18sp" />
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_home_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="电焊维修，水水种家装问题"
+                    android:textColor="#ff333333"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_zhengzai" />
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -101,10 +118,11 @@
                 android:textSize="16sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:id="@+id/addviewlayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
             </LinearLayout>
 
@@ -115,16 +133,17 @@
                 android:background="#DDDDDD" />
 
             <LinearLayout
-                android:gravity="center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp">
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical">
+
                 <TextView
-                    android:drawableLeft="@mipmap/loaction_icon"
                     android:id="@+id/recruitment_city"
-                    android:layout_marginLeft="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:drawableLeft="@mipmap/loaction_icon"
                     android:text="呼和浩特"
                     android:textColor="#666666"
                     android:textSize="13sp" />
@@ -137,14 +156,21 @@
                     android:drawableLeft="@mipmap/icon_review"
                     android:drawablePadding="4dp"
                     android:text="1587人"
-                    android:visibility="gone"
                     android:textColor="#ff999999"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/iv_registered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:src="@mipmap/registered" />
     </RelativeLayout>
 
 

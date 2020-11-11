@@ -97,7 +97,14 @@ public class AddressActivity extends BaseActivity {
         mChosseAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (provinceList == null) {
+                    mApp.shortToast("请选择省");
+                    return;
+                }
+                if (cityList == null) {
+                    mApp.shortToast("请选择市");
+                    return;
+                }
                 passByValue();
             }
         });

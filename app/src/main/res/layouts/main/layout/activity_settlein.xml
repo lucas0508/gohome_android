@@ -50,7 +50,7 @@
                         android:padding="2dp"
                         android:text="待审核"
                         android:textColor="#ffffff"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:visibility="gone" />
 
                     <TextView
@@ -61,7 +61,7 @@
                         android:background="@drawable/common_back_stroke_shape_gray"
                         android:text="注销身份"
                         android:textColor="#ff999999"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:visibility="gone" />
 
                     <TextView
@@ -77,10 +77,10 @@
                     android:id="@+id/tv_wanshan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="16dp"
                     android:text="您还没有完善信息哦~"
                     android:textColor="#ff999999"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:id="@+id/ll_wanshan"
@@ -111,28 +111,28 @@
                                 android:textSize="18sp" />
 
                             <TextView
+                                android:id="@+id/tv_sex"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="6dp"
-                                android:text="男"
                                 android:textColor="#ff999999"
-                                android:textSize="14sp" />
+                                android:textSize="16sp" />
 
                             <TextView
+                                android:id="@+id/tv_birthday"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="6dp"
-                                android:text="48岁"
                                 android:textColor="#ff999999"
-                                android:textSize="14sp" />
+                                android:textSize="16sp" />
 
                             <TextView
+                                android:id="@+id/tv_degree"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="6dp"
-                                android:text="学徒"
                                 android:textColor="#ff999999"
-                                android:textSize="14sp" />
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <TextView
@@ -145,7 +145,7 @@
                             android:maxLength="12"
                             android:text="包揽各种工程、室内装修"
                             android:textColor="#ff333333"
-                            android:textSize="14sp" />
+                            android:textSize="16sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -159,7 +159,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="电工/木工/水暖工"
                                 android:textColor="#ff999999"
-                                android:textSize="12sp" />
+                                android:textSize="16sp" />
 
 
 
@@ -172,7 +172,7 @@
                             android:layout_marginTop="4dp"
                             android:text="18512587958"
                             android:textColor="#ff999999"
-                            android:textSize="12sp" />
+                            android:textSize="16sp" />
                         <LinearLayout
                             android:id="@+id/ll_certificate"
                             android:layout_width="match_parent"
@@ -190,7 +190,7 @@
                                 android:paddingBottom="1dp"
                                 android:text="高级电工"
                                 android:textColor="#ff068bee"
-                                android:textSize="9sp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/tv_certificate2"
@@ -203,7 +203,7 @@
                                 android:paddingBottom="1dp"
                                 android:text="高级电工"
                                 android:textColor="#ff068bee"
-                                android:textSize="9sp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/tv_certificate3"
@@ -216,7 +216,7 @@
                                 android:paddingBottom="1dp"
                                 android:text="高级电工"
                                 android:textColor="#ff068bee"
-                                android:textSize="9sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
 
@@ -229,7 +229,7 @@
                             android:gravity="center_vertical"
                             android:text="内蒙古呼和浩特市"
                             android:textColor="#ff999999"
-                            android:textSize="11sp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <com.qujiali.jiaogegongren.common.model.RoundImageView
@@ -273,7 +273,7 @@
                             android:layout_marginTop="2dp"
                             android:text="拒绝原因："
                             android:textColor="#ffffff"
-                            android:textSize="14sp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/tv_denial_reason"
@@ -284,7 +284,7 @@
                             android:layout_marginBottom="4dp"
                             android:text="接口了发动机克里斯"
                             android:textColor="#ffffff"
-                            android:textSize="13sp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
 
@@ -324,7 +324,7 @@
                     android:layout_marginTop="14dp"
                     android:text="您还没有进行技能介绍哦~"
                     android:textColor="#ff999999"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:id="@+id/ll_jineng"
@@ -341,7 +341,7 @@
                         android:layout_height="wrap_content"
                         android:text="这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍......"
                         android:textColor="#ff666666"
-                        android:textSize="14sp" />
+                        android:textSize="16sp" />
 
                     <com.jude.easyrecyclerview.EasyRecyclerView
                         android:id="@+id/recycler_view"

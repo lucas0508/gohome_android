@@ -1,14 +1,20 @@
 package com.qujiali.jiaogegongren.common.base;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.gyf.immersionbar.ImmersionBar;
 import com.qujiali.jiaogegongren.common.dialog.DialogManage;
 import java.util.Objects;
 import butterknife.ButterKnife;
@@ -72,6 +78,8 @@ public abstract class BaseFragment extends Fragment {
      */
     protected abstract int setLayoutResourceID();
 
+
+
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -120,6 +128,8 @@ public abstract class BaseFragment extends Fragment {
     protected void lazyLoad() {
 
     }
+
+
 
     @Override
     public void onDestroy() {

@@ -22,9 +22,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.facebook.stetho.common.LogUtil;
+import com.gyf.immersionbar.ImmersionBar;
 import com.qujiali.jiaogegongren.R;
 import com.qujiali.jiaogegongren.common.dialog.DialogManage;
 import com.qujiali.jiaogegongren.common.global.Constants;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(setLayoutResourceID());
-       // PushAgent.getInstance(context).onAppStart();
+        // PushAgent.getInstance(context).onAppStart();
         ButterKnife.bind(this);
         ActivityManager.getInstance().addActivity(this);
 
@@ -70,24 +72,24 @@ public abstract class BaseActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN |
                         WindowManager.LayoutParams.SOFT_INPUT_ADJUST_UNSPECIFIED
         );//默认带有EditText的界面不弹出键盘
-       // StatusBarUtils.darkMode(this);
-       //StatusBarUtils.immersive(this,R.color.white);
-
-       // setStatusBar();
+        // StatusBarUtils.darkMode(this);
+        //StatusBarUtils.immersive(this,R.color.white);
+        initStatusColor();
+//        setStatusBar();
         mApp = new DialogManage(getContext());
         initView();
     }
+
     /**
      * 全屏
      */
     public void setStatusBar() {
-        if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            decorView.setSystemUiVisibility(option);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        View decorView = getWindow().getDecorView();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(Color.parseColor("#FFFFFF"));
         }
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
     }
 
 
@@ -104,7 +106,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void initView();
 
 
-
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -116,6 +117,17 @@ public abstract class BaseActivity extends AppCompatActivity {
                     finish();
                 }
             });
+    }
+
+    private void initStatusColor() {
+        //设置共同沉浸式样式
+        ImmersionBar.with(this)
+                .fitsSystemWindows(true)
+                .statusBarColorInt(Color.WHITE)
+                .navigationBarColorInt(Color.BLACK)
+                .keyboardEnable(true)
+                .autoDarkModeEnable(true)
+                .init();
     }
 
     @Override
@@ -142,9 +154,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public void requestRunPermission(List<String> permissionList, PermissionListener listener) {
         mListener = listener;
-        LogUtil.d("权限：",permissionList.toArray());
-        LogUtil.d("权限数量：",permissionList.size());
-
+        LogUtil.d("权限：", permissionList.toArray());
+        LogUtil.d("权限数量：", permissionList.size());
         if (!permissionList.isEmpty()) {
             ActivityCompat.requestPermissions(this, permissionList.toArray(new String[permissionList.size()]), Constants.All_PERMISSIONS_CODE);
         } else {
@@ -195,7 +206,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case  Constants.All_PERMISSIONS_CODE:
+            case Constants.All_PERMISSIONS_CODE:
                 try {
                     if (grantResults.length > 0) {
                         //存放没授权的权限
@@ -249,6 +260,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return onTouchEvent(ev);
     }
+
     /**
      * [页面跳转]
      * * @param clz
@@ -270,5 +282,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 }

@@ -53,7 +53,7 @@ public class ProjectExperienceActivity extends BaseActivity implements IProjectE
         role = getIntent().getStringExtra("role");
 
         if (Objects.equals(role, "WORKER")) {
-            workerListBean = (SettlelnEntity.BprojectWorkerListBean) getIntent().getSerializableExtra("workerList");
+            workerListBean = (SettlelnEntity.BprojectWorkerListBean) getIntent().getParcelableExtra("workerList");
 
             if (null != workerListBean) {
                 et_project_name.setText(workerListBean.getName());

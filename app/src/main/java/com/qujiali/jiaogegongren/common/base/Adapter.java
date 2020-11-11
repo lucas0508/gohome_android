@@ -80,9 +80,8 @@ public abstract class Adapter<T> extends RecyclerArrayAdapter<T> {
     @Override
     public abstract BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType);
 
+
     public void setMore(OnMoreListener listener) {
         super.setMore(R.layout.recycler_progress, listener);
     }
-
-
 }

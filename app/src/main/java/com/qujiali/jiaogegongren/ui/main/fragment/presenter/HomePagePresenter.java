@@ -1,9 +1,11 @@
 package com.qujiali.jiaogegongren.ui.main.fragment.presenter;
 
 import com.qujiali.jiaogegongren.bean.HomeEntity;
+import com.qujiali.jiaogegongren.bean.HomeWorkerTypeEntity;
 import com.qujiali.jiaogegongren.common.base.BasePresenter;
 import com.qujiali.jiaogegongren.common.base.IBaseModel;
 import com.qujiali.jiaogegongren.common.net.HttpProvider;
+import com.qujiali.jiaogegongren.common.net.ResponseDataEntity;
 import com.qujiali.jiaogegongren.common.net.ResponseEntity;
 import com.qujiali.jiaogegongren.ui.main.fragment.model.HomePageModel;
 import com.qujiali.jiaogegongren.ui.main.fragment.model.impl.IHomePageModel;
@@ -22,8 +24,8 @@ public class HomePagePresenter extends BasePresenter {
         this.iHomePageView = iHomePageView;
     }
 
-    public void getHomePageData(Map<String,Object> map, String cityCode, String searchContent){
-        iHomePageModel.getHomePageData(map, cityCode, searchContent, new IBaseModel.OnCallbackListener() {
+    public void getHomePageData(Map<String,Object> map, String cityCode, String searchContent,String orderBy ){
+        iHomePageModel.getHomePageData(map, cityCode, searchContent,orderBy, new IBaseModel.OnCallbackListener() {
             @Override
             public void callback(ResponseEntity res) {
                 if (HttpProvider.isSuccessful(res.getCode())){
@@ -33,5 +35,21 @@ public class HomePagePresenter extends BasePresenter {
                 }
             }
         });
+
+
+    }
+
+
+    public void getHomeWorkerType(){
+            iHomePageModel.getHomeWorkTypeData(new IBaseModel.OnCallbackDataListener() {
+                @Override
+                public void callback(ResponseDataEntity res) {
+                    if (HttpProvider.isSuccessful(res.getCode())){
+                        iHomePageView.getHomeWorkTypeSuccess((ArrayList<HomeWorkerTypeEntity>) res.getData());
+                    }else {
+                        iHomePageView.getHomeWorkTypeFail(res.getMsg());
+                    }
+                }
+            });
     }
 }

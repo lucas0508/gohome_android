@@ -29,6 +29,8 @@ import com.qujiali.jiaogegongren.bean.WorkerProficiencyEntity;
 import com.qujiali.jiaogegongren.common.base.BaseActivity;
 import com.qujiali.jiaogegongren.common.base.MyAppGlideModule;
 import com.qujiali.jiaogegongren.common.base.OnMultiClickListener;
+import com.qujiali.jiaogegongren.common.dialog.DateWheelPicker2;
+import com.qujiali.jiaogegongren.common.dialog.DialogUtil;
 import com.qujiali.jiaogegongren.common.dialog.SelectDialog;
 import com.qujiali.jiaogegongren.common.dialog.SelectPicDialog;
 import com.qujiali.jiaogegongren.common.dialog.SelectSexDialog;
@@ -51,6 +53,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import io.itimetraveler.widget.pickerselector.DateWheelPicker;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
@@ -202,7 +205,8 @@ public class PerfectInformationActivity extends BaseActivity implements IWorkerP
         tv_birthday.setOnClickListener(new OnMultiClickListener() {
             @Override
             public void onMultiClick(View v) {
-                chooseBirthday();
+//                chooseBirthday();
+                ChooseAge();
             }
         });
         tv_work_proficiency.setOnClickListener(new OnMultiClickListener() {
@@ -241,7 +245,7 @@ public class PerfectInformationActivity extends BaseActivity implements IWorkerP
             return;
         }
         if (TextUtils.isEmpty(et_name.getText().toString().trim())) {
-            mApp.shortToast("请输入姓名");
+            mApp.shortToast("请输入昵称");
             return;
         }
         if (TextUtils.isEmpty(userSex)) {
@@ -307,6 +311,25 @@ public class PerfectInformationActivity extends BaseActivity implements IWorkerP
         }
     }
 
+
+    private void ChooseAge(){
+        DateWheelPicker2 picker= new DateWheelPicker2(PerfectInformationActivity.this);
+        picker.setMaxDate(Calendar.getInstance().getTimeInMillis());
+        picker.setOnDateChangedListener(new DateWheelPicker2.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DateWheelPicker2 view, int year, int monthOfYear, int dayOfMonth) {
+                tv_birthday.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+                birthday = year + "-" + monthOfYear + "-" + dayOfMonth;
+
+                Log.e("TAG", "onDateChanged: "+birthday );
+            }
+        });
+        showDialog("请选择出生日期", picker);
+    }
+
+        private void showDialog(String title, View v) {
+        DialogUtil.showDialog(PerfectInformationActivity.this, title, v);
+    }
 
     private void chooseBirthday() {
         Calendar calendar = Calendar.getInstance();

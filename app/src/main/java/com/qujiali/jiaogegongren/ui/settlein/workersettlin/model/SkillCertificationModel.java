@@ -14,10 +14,11 @@ public class SkillCertificationModel extends BaseModel implements ISkillCertific
 
 
     @Override
-    public void sendSkillCertification(String name, String picture, OnCallbackListener onCallbackListener) {
+    public void sendSkillCertification(String name, String picture,String id, OnCallbackListener onCallbackListener) {
         Map<String, Object> objectMap = new HashMap<>();
         objectMap.put("name", name);
         objectMap.put("pictrues", picture);
+        objectMap.put("id", id);
         HttpProvider.doPost(GlobalConstants.APP_SETTLED_AUTHENTICATION, objectMap, responseText -> {
             executeCallback(responseText,null,onCallbackListener);
         });

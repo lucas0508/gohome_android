@@ -11,8 +11,10 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.orhanobut.logger.Logger;
 import com.qujiali.jiaogegongren.R;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class GridViewAddImgesAdpter extends BaseAdapter {
@@ -65,7 +67,7 @@ public class GridViewAddImgesAdpter extends BaseAdapter {
         Log.e("", "getView: count--" + count);
         Log.e("", "getView: images--" + mBusinessPictureList.size());
 
-        if (count > maxImages) {
+        if (count > maxImages || isShow) {
             return mBusinessPictureList.size();
         } else {
             return count;
@@ -107,17 +109,23 @@ public class GridViewAddImgesAdpter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         /**代表+号之前的需要正常显示图片**/
+
+
         if (isShow) {
+            Logger.e("Arrays.mBusinessPictureList" + Arrays.asList(mBusinessPictureList));
             viewHolder.btdel.setVisibility(View.GONE);
             viewHolder.btdel.setOnClickListener(null);
             viewHolder.ivimage.setOnClickListener(null);
+
             if (mBusinessPictureList != null && position < mBusinessPictureList.size()) {
                 Glide.with(context).load(mBusinessPictureList.get(position))
                         .apply(new RequestOptions().placeholder(R.mipmap.upload_defaut).centerCrop())
                         .into(viewHolder.ivimage);
+            } else {
+                viewHolder.btdel.setVisibility(View.GONE);
             }
 
-        }else {
+        } else {
             if (mBusinessPictureList != null && position < mBusinessPictureList.size()) {
                 // final File file = new File(mBusinessPictureList.get(position));
 
@@ -137,8 +145,6 @@ public class GridViewAddImgesAdpter extends BaseAdapter {
                 });
             } else {
                 /**代表+号的需要+号图片显示图片**/
-
-
                 Glide.with(context)
                         .load(R.mipmap.upload_bg)
                         .into(viewHolder.ivimage);

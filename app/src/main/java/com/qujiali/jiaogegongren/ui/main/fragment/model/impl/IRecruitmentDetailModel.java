@@ -5,6 +5,8 @@ import com.qujiali.jiaogegongren.common.base.IBaseModel;
 public interface IRecruitmentDetailModel {
 
 
-    void loadRecruitmentData( int id, IBaseModel.OnCallbackListener listener);
+    void loadRecruitmentData(int id, IBaseModel.OnCallbackListener listener);
+
+    void postApplyData(int recruitId, IBaseModel.OnCallbackListener listener);
 
 }

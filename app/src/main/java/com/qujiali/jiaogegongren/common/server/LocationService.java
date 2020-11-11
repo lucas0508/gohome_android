@@ -12,6 +12,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.orhanobut.logger.Logger;
 import com.qujiali.jiaogegongren.common.cache.SharedPreferences.UserInfo;
+import com.qujiali.jiaogegongren.ui.callphone.view.CallPhoneFragment;
 import com.qujiali.jiaogegongren.ui.main.activity.MainActivity;
 import com.qujiali.jiaogegongren.ui.main.fragment.view.HomePageFragment;
 
@@ -87,10 +88,13 @@ public class LocationService extends Service {
                 cityCode = amapLocation.getAdCode();
             }
             UserInfo.setCityCode(cityCode);
-            UserInfo.setCityCodeName(amapLocation.getDistrict());
+            UserInfo.setCityCodeName(amapLocation.getCity());
             Logger.d(UserInfo.getCityCode());
             if (HomePageFragment.instance != null) {
                 HomePageFragment.instance.setData();
+            }
+            if (CallPhoneFragment.instance != null) {
+                CallPhoneFragment.instance.setData();
             }
             return;
         }

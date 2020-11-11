@@ -1,6 +1,7 @@
 package com.qujiali.jiaogegongren.ui.settlein.workersettlin.view;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,8 @@ public class SkillCertificationListActivity extends BaseActivity implements ISki
     TextView mCommonRight;
     @BindView(R.id.recycler)
     EasyRecyclerView mEasyRecyclerView;
+
+
     private Adapter<SkillCertificationEntity> skillCertificationEntityAdapter;
 
     @Override
@@ -76,15 +79,18 @@ public class SkillCertificationListActivity extends BaseActivity implements ISki
             @Override
             public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 return new ViewHolder<SkillCertificationEntity>(parent, R.layout.item_activity_skillcertificationlist) {
-                    private TextView tv_skill, tv_status, tv_time;
+                    private TextView tv_skill, tv_status, tv_time, tv_refuseReason;
                     private ImageView iv_image;
+                    private View view_refuseReason;
 
                     @Override
                     public void initView() {
                         tv_skill = $(R.id.tv_skill);
                         tv_status = $(R.id.tv_status);
                         tv_time = $(R.id.tv_time);
-                        iv_image=$(R.id.iv_image);
+                        tv_refuseReason = $(R.id.tv_refuseReason);
+                        view_refuseReason = $(R.id.view_refuseReason);
+                        iv_image = $(R.id.iv_image);
                     }
 
                     @Override
@@ -93,15 +99,22 @@ public class SkillCertificationListActivity extends BaseActivity implements ISki
                         tv_skill.setText(data.getName());
                         tv_time.setText(data.getCreateTime());
                         Glide.with(SkillCertificationListActivity.this).applyDefaultRequestOptions(new RequestOptions()
-                            .error(R.mipmap.banner_default).placeholder(R.mipmap.banner_default)).load(data.getPictrues()).into(iv_image);
-                        if (data.getStatus()==0){
+                                .error(R.mipmap.head_default).placeholder(R.mipmap.head_default)).load(data.getPictrues()).into(iv_image);
+                        if (data.getStatus() == 0) {
                             tv_status.setText("待审核");
                             tv_status.setTextColor(Color.parseColor("#FC8419"));
-                        }else if (data.getStatus()==1){
+                            view_refuseReason.setVisibility(View.GONE);
+                            tv_refuseReason.setVisibility(View.GONE);
+                        } else if (data.getStatus() == 1) {
                             tv_status.setText("已通过");
                             tv_status.setTextColor(Color.parseColor("#21B11D"));
-                        }else if (data.getStatus()==2){
+                            view_refuseReason.setVisibility(View.GONE);
+                            tv_refuseReason.setVisibility(View.GONE);
+                        } else if (data.getStatus() == 2) {
                             tv_status.setText("已拒绝");
+                            tv_refuseReason.setText("拒绝原因：" + data.getRefuseReason());
+                            view_refuseReason.setVisibility(View.VISIBLE);
+                            tv_refuseReason.setVisibility(View.VISIBLE);
                             tv_status.setTextColor(Color.parseColor("#E63636"));
                         }
                     }
@@ -117,7 +130,12 @@ public class SkillCertificationListActivity extends BaseActivity implements ISki
         });
 
         skillCertificationEntityAdapter.setOnItemClickListener(position -> {
-
+            SkillCertificationEntity item = skillCertificationEntityAdapter.getItem(position);
+            if (item.getStatus() == 2) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("item",item);
+                startActivity(SkillCertificationWorkerActivity.class,bundle);
+            }
         });
     }
 

@@ -3,12 +3,18 @@ package com.qujiali.jiaogegongren.ui.main.fragment.view;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,6 +30,7 @@ import com.google.gson.Gson;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+import com.orhanobut.logger.Logger;
 import com.qujiali.jiaogegongren.GoHomeApplication;
 import com.qujiali.jiaogegongren.R;
 import com.qujiali.jiaogegongren.bean.RecruitmentEntity;
@@ -34,6 +41,7 @@ import com.qujiali.jiaogegongren.common.base.OnMultiClickListener;
 import com.qujiali.jiaogegongren.common.base.ViewHolder;
 import com.qujiali.jiaogegongren.common.cache.SharedPreferences.UserInfo;
 import com.qujiali.jiaogegongren.common.model.RoundImageView;
+import com.qujiali.jiaogegongren.common.model.address.Address2PickerView;
 import com.qujiali.jiaogegongren.common.model.address.AddressPickerView;
 import com.qujiali.jiaogegongren.ui.main.activity.RecruitmentDetailActivity;
 import com.qujiali.jiaogegongren.ui.main.fragment.presenter.RecruitmentPresenter;
@@ -64,9 +72,18 @@ public class RecruitmentFragment extends BaseFragment implements IRecruitmentVie
     TextView chooseCity;
     @BindView(R.id.et_search)
     EditText et_search;
+    @BindView(R.id.tv_search)
+    TextView tv_search;
+    @BindView(R.id.tv_related_to_me)
+    TextView tv_related_to_me;
+    @BindView(R.id.tv_currentCity)
+    TextView tv_currentCity;
+
+
     private Adapter<RecruitmentEntity> mAdapter;
-    private String mDistrictCode = "";
+    private String mCityCode = "";
     private YwpAddressBean mYwpAddressBean;
+    private String key = "";
 
     @Override
     protected void initView() {
@@ -82,7 +99,49 @@ public class RecruitmentFragment extends BaseFragment implements IRecruitmentVie
         mRelease.setOnClickListener(new OnMultiClickListener() {
             @Override
             public void onMultiClick(View v) {
-                startActivity(PostRecruitmentActivity.class);
+                if (mApp.isLoginToDialog()) {
+                    startActivity(PostRecruitmentActivity.class);
+                }
+            }
+        });
+
+        et_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                key = s.toString();
+                Log.e("TAG", "onMultiClick: " + key);
+            }
+        });
+
+        tv_search.setOnClickListener(new OnMultiClickListener() {
+            @Override
+            public void onMultiClick(View v) {
+                recruitmentPresenter.loadRecruitmentData(mAdapter.refreshPage(), mCityCode, et_search.getText().toString(),"");
+            }
+        });
+
+        tv_related_to_me.setOnClickListener(new OnMultiClickListener() {
+            @Override
+            public void onMultiClick(View v) {
+                //与我相关
+                recruitmentPresenter.loadRecruitmentData(mAdapter.refreshPage(), UserInfo.getCityCode(), et_search.getText().toString(),"String");
+            }
+        });
+        tv_currentCity.setOnClickListener(new OnMultiClickListener() {
+            @Override
+            public void onMultiClick(View v) {
+                mCityCode = UserInfo.getCityCode();
+                recruitmentPresenter.loadRecruitmentData(mAdapter.refreshPage(), UserInfo.getCityCode(), et_search.getText().toString(),"");
+                tv_currentCity.setText(UserInfo.getCityCodeName());
             }
         });
         initRecyclerView();
@@ -91,13 +150,13 @@ public class RecruitmentFragment extends BaseFragment implements IRecruitmentVie
     @Override
     protected void lazyLoad() {
         super.lazyLoad();
-        chooseCity.setText(UserInfo.getCityCodeName());
+//        chooseCity.setText(UserInfo.getCityCodeName());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        recruitmentPresenter.loadRecruitmentData(mAdapter.refreshPage(), TextUtils.isEmpty(mDistrictCode) ? UserInfo.getCityCode() : mDistrictCode, null);
+        recruitmentPresenter.loadRecruitmentData(mAdapter.refreshPage(), mCityCode, null,"");
     }
 
     @Override
@@ -118,6 +177,7 @@ public class RecruitmentFragment extends BaseFragment implements IRecruitmentVie
                             tv_home_content, tv_home_city, tv_home_review, tv_home_name, tv_time;
                     private RoundImageView riv_headImage;
                     private LinearLayout addviewlayout;
+                    private ImageView iv_registered;
 
 
                     @Override
@@ -131,6 +191,8 @@ public class RecruitmentFragment extends BaseFragment implements IRecruitmentVie
                         riv_headImage = $(R.id.riv_headImage);
                         addviewlayout = $(R.id.addviewlayout);
                         tv_time = $(R.id.tv_time);
+                        iv_registered = $(R.id.iv_registered);
+
                     }
 
                     @Override
@@ -143,14 +205,22 @@ public class RecruitmentFragment extends BaseFragment implements IRecruitmentVie
                         tv_home_name.setText(data.getUserName());
                         tv_time.setText(data.getCreateTime());
                         Glide.with(GoHomeApplication.getContext()).load(data.getProfile()).into(riv_headImage);
-                        String[] split = data.getLabels().split(",");
-                        addviewlayout.removeAllViews();
-                        for (int i = 0; i < split.length; i++) {
-                            View viewItemParent = LayoutInflater.from(getActivity()).inflate(R.layout.item_dynamic_textview, addviewlayout, false);
-                            addviewlayout.addView(viewItemParent);
-                            final View viewItem = addviewlayout.getChildAt(i);
-                            TextView mTaskTitle = viewItem.findViewById(R.id.tv_addview);
-                            mTaskTitle.setText(split[i]);
+                        //动态生成标签
+                       /* if (!TextUtils.isEmpty(data.getLabels())) {
+                            String[] split = data.getLabels().split(",");
+                            addviewlayout.removeAllViews();
+                            for (int i = 0; i < split.length; i++) {
+                                View viewItemParent = LayoutInflater.from(getActivity()).inflate(R.layout.item_dynamic_textview, addviewlayout, false);
+                                addviewlayout.addView(viewItemParent);
+                                final View viewItem = addviewlayout.getChildAt(i);
+                                TextView mTaskTitle = viewItem.findViewById(R.id.tv_addview);
+                                mTaskTitle.setText(split[i]);
+                            }
+                        }*/
+                        if (TextUtils.isEmpty(data.getApplyType()) || data.getApplyType().equals("0")) {
+                            iv_registered.setVisibility(View.GONE);
+                        } else {
+                            iv_registered.setVisibility(View.VISIBLE);
                         }
                     }
                 };
@@ -160,14 +230,16 @@ public class RecruitmentFragment extends BaseFragment implements IRecruitmentVie
         mEasyRecyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                recruitmentPresenter.loadRecruitmentData(mAdapter.refreshPage(), TextUtils.isEmpty(mDistrictCode) ? UserInfo.getCityCode() : mDistrictCode, null);
+                Logger.e("--------2点击搜索数据--->", key);
+                recruitmentPresenter.loadRecruitmentData(mAdapter.refreshPage(), mCityCode, key,"");
             }
         });
         mAdapter.setMore(new RecyclerArrayAdapter.OnMoreListener() {
             @Override
             public void onMoreShow() {
-                recruitmentPresenter.loadRecruitmentData(mAdapter.getNextPage(), TextUtils.isEmpty(mDistrictCode) ? UserInfo.getCityCode() : mDistrictCode, null);
+                recruitmentPresenter.loadRecruitmentData(mAdapter.getNextPage(), mCityCode, key,"");
             }
+
 
             @Override
             public void onMoreClick() {
@@ -183,6 +255,7 @@ public class RecruitmentFragment extends BaseFragment implements IRecruitmentVie
 
     @Override
     public void loadRecruitmentDataSuccess(ArrayList<RecruitmentEntity> recruitmentEntities) {
+
         mAdapter.addAll(recruitmentEntities);
     }
 
@@ -191,28 +264,30 @@ public class RecruitmentFragment extends BaseFragment implements IRecruitmentVie
         mApp.shortToast(info);
     }
 
+
     /**
      * 显示地址选择的pop
      */
     private void showAddressPickerPop() {
         final PopupWindow popupWindow = new PopupWindow(getActivity());
-        View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.pop_address_picker, null, false);
+        View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.pop_addresstwo_picker, null, false);
 
-        AddressPickerView addressView = rootView.findViewById(R.id.apvAddress);
+        Address2PickerView addressView = rootView.findViewById(R.id.apvAddress);
 
-        addressView.setOnAddressPickerSure(new AddressPickerView.OnAddressPickerSureListener() {
+
+        addressView.setOnAddressPickerSure(new Address2PickerView.OnAddressPickerSureListener() {
             @Override
-            public void onSureClick(String allAddress,String address, String provinceCode, String cityCode, String districtCode) {
+            public void onSureClick(String allAddress, String address, String provinceCode, String cityCode, String districtCode) {
                 String mProvinceCode = provinceCode;
-                String mCityCode = cityCode;
-                mDistrictCode = districtCode;
-                Log.e("onSureClick: ", mProvinceCode + "---" + mCityCode + "---" + mDistrictCode);
+                mCityCode = cityCode;
+                Log.e("onSureClick: ", mProvinceCode + "---" + cityCode);
                 chooseCity.setText(address);
                 popupWindow.dismiss();
                 chooseCity.setEnabled(true);
-                recruitmentPresenter.loadRecruitmentData(mAdapter.refreshPage(), mDistrictCode, null);
+                tv_currentCity.setText("当前城市");
+                recruitmentPresenter.loadRecruitmentData(mAdapter.refreshPage(), mCityCode, null,"");
             }
-        },true);
+        }, true);
         popupWindow.setContentView(rootView);
         popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
@@ -226,8 +301,6 @@ public class RecruitmentFragment extends BaseFragment implements IRecruitmentVie
         popupWindow.showAsDropDown(chooseCity);
 
 
-
-
         StringBuilder jsonSB = new StringBuilder();
         try {
             BufferedReader addressJsonStream = new BufferedReader(new InputStreamReader(getContext().getAssets().open("address.json")));
@@ -239,7 +312,7 @@ public class RecruitmentFragment extends BaseFragment implements IRecruitmentVie
         }
         // 将数据转换为对象
         mYwpAddressBean = new Gson().fromJson(jsonSB.toString(), YwpAddressBean.class);
-        addressView.initData(mYwpAddressBean);
+        addressView.initData(mYwpAddressBean, 2);
 
     }
 

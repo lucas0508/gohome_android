@@ -1,11 +1,14 @@
 package com.qujiali.jiaogegongren.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class SettlelnCompanyEntity {
+public class SettlelnCompanyEntity implements Parcelable {
 
 
     /**
@@ -279,7 +282,7 @@ public class SettlelnCompanyEntity {
         }
     }
 
-    public static class BProjectEnterpriseBean implements Serializable{
+    public static class BProjectEnterpriseBean implements Parcelable {
         /**
          * searchValue : null
          * createBy : null
@@ -299,13 +302,13 @@ public class SettlelnCompanyEntity {
          * remarks : null
          */
 
-        private Object searchValue;
-        private Object createBy;
+        private String searchValue;
+        private String createBy;
         private String createTime;
-        private Object updateBy;
-        private Object updateTime;
-        private Object remark;
-        private Object dataScope;
+        private String updateBy;
+        private String updateTime;
+        private String remark;
+        private String dataScope;
         private ParamsBean params;
         private int id;
         private String name;
@@ -314,21 +317,21 @@ public class SettlelnCompanyEntity {
         private String content;
         private int settledEnterpriseId;
         private int delFlag;
-        private Object remarks;
+        private String remarks;
 
-        public Object getSearchValue() {
+        public String getSearchValue() {
             return searchValue;
         }
 
-        public void setSearchValue(Object searchValue) {
+        public void setSearchValue(String searchValue) {
             this.searchValue = searchValue;
         }
 
-        public Object getCreateBy() {
+        public String getCreateBy() {
             return createBy;
         }
 
-        public void setCreateBy(Object createBy) {
+        public void setCreateBy(String createBy) {
             this.createBy = createBy;
         }
 
@@ -340,35 +343,35 @@ public class SettlelnCompanyEntity {
             this.createTime = createTime;
         }
 
-        public Object getUpdateBy() {
+        public String getUpdateBy() {
             return updateBy;
         }
 
-        public void setUpdateBy(Object updateBy) {
+        public void setUpdateBy(String updateBy) {
             this.updateBy = updateBy;
         }
 
-        public Object getUpdateTime() {
+        public String getUpdateTime() {
             return updateTime;
         }
 
-        public void setUpdateTime(Object updateTime) {
+        public void setUpdateTime(String updateTime) {
             this.updateTime = updateTime;
         }
 
-        public Object getRemark() {
+        public String getRemark() {
             return remark;
         }
 
-        public void setRemark(Object remark) {
+        public void setRemark(String remark) {
             this.remark = remark;
         }
 
-        public Object getDataScope() {
+        public String getDataScope() {
             return dataScope;
         }
 
-        public void setDataScope(Object dataScope) {
+        public void setDataScope(String dataScope) {
             this.dataScope = dataScope;
         }
 
@@ -440,11 +443,100 @@ public class SettlelnCompanyEntity {
             return remarks;
         }
 
-        public void setRemarks(Object remarks) {
+        public void setRemarks(String remarks) {
             this.remarks = remarks;
         }
 
         public static class ParamsBean {
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.searchValue);
+            dest.writeString(this.createBy);
+            dest.writeString(this.createTime);
+            dest.writeString(this.updateBy);
+            dest.writeString(this.updateTime);
+            dest.writeString(this.remark);
+            dest.writeString(this.dataScope);
+            dest.writeInt(this.id);
+            dest.writeString(this.name);
+            dest.writeString(this.startDate);
+            dest.writeString(this.endDate);
+            dest.writeString(this.content);
+            dest.writeInt(this.settledEnterpriseId);
+            dest.writeInt(this.delFlag);
+            dest.writeString(this.remarks);
+        }
+
+        public BProjectEnterpriseBean() {
+        }
+
+        protected BProjectEnterpriseBean(Parcel in) {
+            this.searchValue = in.readParcelable(Object.class.getClassLoader());
+            this.createBy = in.readParcelable(Object.class.getClassLoader());
+            this.createTime = in.readString();
+            this.updateBy = in.readParcelable(Object.class.getClassLoader());
+            this.updateTime = in.readParcelable(Object.class.getClassLoader());
+            this.remark = in.readParcelable(Object.class.getClassLoader());
+            this.dataScope = in.readParcelable(Object.class.getClassLoader());
+            this.id = in.readInt();
+            this.name = in.readString();
+            this.startDate = in.readString();
+            this.endDate = in.readString();
+            this.content = in.readString();
+            this.settledEnterpriseId = in.readInt();
+            this.delFlag = in.readInt();
+            this.remarks = in.readParcelable(Object.class.getClassLoader());
+        }
+
+        public static final Creator<BProjectEnterpriseBean> CREATOR = new Creator<BProjectEnterpriseBean>() {
+            @Override
+            public BProjectEnterpriseBean createFromParcel(Parcel source) {
+                return new BProjectEnterpriseBean(source);
+            }
+
+            @Override
+            public BProjectEnterpriseBean[] newArray(int size) {
+                return new BProjectEnterpriseBean[size];
+            }
+        };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeSerializable(this.bSettledEnterpriseVo);
+        dest.writeList(this.bProjectEnterprise);
+    }
+
+    public SettlelnCompanyEntity() {
+    }
+
+    protected SettlelnCompanyEntity(Parcel in) {
+        this.bSettledEnterpriseVo = (BSettledEnterpriseVoBean) in.readSerializable();
+        this.bProjectEnterprise = new ArrayList<BProjectEnterpriseBean>();
+        in.readList(this.bProjectEnterprise, BProjectEnterpriseBean.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<SettlelnCompanyEntity> CREATOR = new Parcelable.Creator<SettlelnCompanyEntity>() {
+        @Override
+        public SettlelnCompanyEntity createFromParcel(Parcel source) {
+            return new SettlelnCompanyEntity(source);
+        }
+
+        @Override
+        public SettlelnCompanyEntity[] newArray(int size) {
+            return new SettlelnCompanyEntity[size];
+        }
+    };
 }

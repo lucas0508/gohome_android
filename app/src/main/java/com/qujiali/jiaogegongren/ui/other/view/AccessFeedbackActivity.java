@@ -28,7 +28,7 @@ import butterknife.BindView;
  */
 public class AccessFeedbackActivity extends BaseActivity {
 
-    private static final String MAX_LENGTH = "120";
+    private static final String MAX_LENGTH = "50";
     private EditText mContent, mChatType;
     private TextView mNumber;
     private Button mSubmit;

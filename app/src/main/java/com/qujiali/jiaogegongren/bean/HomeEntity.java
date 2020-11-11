@@ -40,6 +40,8 @@ public class HomeEntity {
      * shortName : 传诚文化
      */
 
+
+
     private int id;
     private String name;
     private String profile;
@@ -71,6 +73,15 @@ public class HomeEntity {
     private String shortName;
     private List<String> areaList;
     private String title;
+    private String attention;
+
+    public String getAttention() {
+        return attention == null ? "" : attention;
+    }
+
+    public void setAttention(String attention) {
+        this.attention = attention;
+    }
 
     public String getTitle() {
         return title == null ? "" : title;

@@ -7,4 +7,10 @@ public interface IRecruitmentDetailView {
     void queryRecruitmentDetailDataSuccess(RecruitmentEntity recruitmentEntity);
 
     void queryRecruitmentDetailDataFail(String info);
+
+    void postApplyDataSuccess();
+
+    void postApplyDataFail(String info);
+
+
 }

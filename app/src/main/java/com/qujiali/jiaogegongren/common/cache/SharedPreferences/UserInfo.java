@@ -104,7 +104,7 @@ public class UserInfo {
     }
 
     public static String getCityCode() {
-        return sharedPreferences.getString(KEY_CITY_CODE, null);
+        return sharedPreferences.getString(KEY_CITY_CODE, "");
     }
 
     public static boolean setCityCodeName(String city) {

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -115,9 +116,13 @@ public class HomeDetailActivity extends BaseActivity implements IHomeDetailView,
     RoundImageView riv_image;
     @BindView(R.id.scrollview)
     NestedScrollView scrollview;
-
     @BindView(R.id.iv_back)
     ImageView iv_back;
+
+
+    @BindView(R.id.rel)
+    RelativeLayout relativeLayout;
+
 
     private String phoneAll;
     private Adapter<String> mAdapter;
@@ -188,19 +193,33 @@ public class HomeDetailActivity extends BaseActivity implements IHomeDetailView,
     }
 
     private void initListeners() {
-        tv_look_number.setOnClickListener(new OnMultiClickListener() {
+
+        relativeLayout.setOnClickListener(new OnMultiClickListener() {
             @Override
             public void onMultiClick(View v) {
-                bannerType = 0;
-                bannerPresenter.queryBannerDataList(UserInfo.getCityCode(), "3", "1");
+                if (tv_look_number.getVisibility()==View.VISIBLE){
+                    bannerType = 0;
+                    bannerPresenter.queryBannerDataList(UserInfo.getCityCode(), "3", "1");
+                    return;
+                }
+                if (tv_call_number.getVisibility()==View.VISIBLE){
+                    callPhone(phoneAll);
+                }
+            }
+        });
+
+     /*   tv_look_number.setOnClickListener(new OnMultiClickListener() {
+            @Override
+            public void onMultiClick(View v) {
+
             }
         });
         tv_call_number.setOnClickListener(new OnMultiClickListener() {
             @Override
             public void onMultiClick(View v) {
-                callPhone(phoneAll);
+
             }
-        });
+        });*/
 
         tv_home_attention.setOnClickListener(new OnMultiClickListener() {
             @Override
@@ -280,7 +299,7 @@ public class HomeDetailActivity extends BaseActivity implements IHomeDetailView,
     }
 
     private void initRecyclerView() {
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mEasyRecyclerView.setLayoutManager(layoutManager1);
         mEasyRecyclerView.setAdapter(mAdapter = new Adapter<String>(this, false) {
 
@@ -352,9 +371,9 @@ public class HomeDetailActivity extends BaseActivity implements IHomeDetailView,
         mAdapterProject.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Bundle bundle1 = new Bundle();
-                bundle1.putSerializable("workerList", mAdapterProject.getItem(position));
-                startActivity(ProjectExperienceActivity.class, bundle1);
+//                Bundle bundle1 = new Bundle();
+//                bundle1.putSerializable("workerList", mAdapterProject.getItem(position));
+//                startActivity(ProjectExperienceActivity.class, bundle1);
             }
         });
     }

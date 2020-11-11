@@ -100,6 +100,7 @@ public class HttpProvider {
         String authorization = UserInfo.getToken();
         Headers.Builder headers = new Headers.Builder();//DevicePermissionsUtils.getUniqueId()
         headers.set("phoneModel", DevicePermissionsUtils.getPhoneModel());
+        headers.set("deviceId", DevicePermissionsUtils.getUniqueId());
         headers.set("phoneSystem", DevicePermissionsUtils.getPhoneSystem());
         headers.set("phoneVersion", DevicePermissionsUtils.getSystemVersion());
         headers.set("largeVersion", DevicePermissionsUtils.getAppMaxVersion());

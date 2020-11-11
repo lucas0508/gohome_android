@@ -7,11 +7,14 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatCheckBox;
 
 import com.facebook.stetho.common.LogUtil;
 import com.orhanobut.logger.Logger;
@@ -29,6 +32,7 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.umeng.commonsdk.debug.E;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -60,6 +64,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     TextView mTitle;
     @BindView(R.id.ib_close)
     ImageButton mClose;
+    @BindView(R.id.checkbox)
+    AppCompatCheckBox appCompatCheckBox;
+
     private String captcha_key;
 
     @Override
@@ -103,6 +110,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         mLoginAgreement.setOnClickListener(this);
         mLoginAgreementPrivacy.setOnClickListener(this);
         initPhoneEditText();
+
+        appCompatCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    mLogin.setEnabled(true);
+                }else {
+                    mLogin.setEnabled(false);
+                }
+            }
+        });
     }
 
     private void initPhoneEditText() {
@@ -160,7 +178,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 sendValidate();
                 break;
             case R.id.b_login:
-                loginBefore();
+                boolean checked = appCompatCheckBox.isChecked();
+                if (checked){
+                    loginBefore();
+                }else {
+                    mApp.shortToast("请勾选用户协议");
+                }
                 //mApp.shortToast("阅读并同意底部相关协议才能登录");
                 break;
             case R.id.b_wx_login:

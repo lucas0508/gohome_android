@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white">
@@ -10,13 +10,14 @@
     <include layout="@layout/base_title_layout" />
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
 
             <LinearLayout
@@ -49,7 +50,7 @@
                         android:background="#FE9500"
                         android:textColor="#ffffff"
                         android:padding="2dp"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:text="待审核"
                         android:visibility="gone" />
 
@@ -61,7 +62,7 @@
                         android:background="@drawable/common_back_stroke_shape_gray"
                         android:text="注销身份"
                         android:textColor="#ff999999"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:visibility="gone" />
 
                     <TextView
@@ -80,9 +81,10 @@
                     android:layout_marginTop="14dp"
                     android:text="您还没有完善信息哦~"
                     android:textColor="#ff999999"
-                    android:textSize="12sp" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
+                    android:layout_marginTop="10dp"
                     android:id="@+id/ll_wanshan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -116,7 +118,7 @@
                             android:maxLength="12"
                             android:text="包揽各种工程、室内装修"
                             android:textColor="#ff333333"
-                            android:textSize="14sp" />
+                            android:textSize="16sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -130,7 +132,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="电工/木工/水暖工"
                                 android:textColor="#ff999999"
-                                android:textSize="12sp" />
+                                android:textSize="16sp" />
 
 
 
@@ -143,7 +145,7 @@
                             android:layout_marginTop="5dp"
                             android:text="18512587958"
                             android:textColor="#ff999999"
-                            android:textSize="12sp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/tv_city"
@@ -154,7 +156,7 @@
                             android:gravity="center_vertical"
                             android:text="内蒙古呼和浩特市"
                             android:textColor="#ff999999"
-                            android:textSize="11sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -208,7 +210,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="#ffffff"
-                            android:textSize="13sp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
 
@@ -246,7 +248,7 @@
                     android:layout_height="wrap_content"
                     android:text="您还没有进行公司介绍哦~"
                     android:textColor="#ff999999"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
                     />
 
                 <LinearLayout
@@ -264,11 +266,11 @@
                         android:layout_height="wrap_content"
                         android:text="这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍这是一个简单的自我介绍......"
                         android:textColor="#ff666666"
-                        android:textSize="14sp" />
+                        android:textSize="16sp" />
 
                     <com.jude.easyrecyclerview.EasyRecyclerView
                         android:id="@+id/recycler_view"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
@@ -282,11 +284,11 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/tv_project_experience"
                 android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="22dp"
                 android:orientation="vertical"
                 android:layout_marginEnd="22dp">
@@ -301,19 +303,20 @@
 
                 <com.jude.easyrecyclerview.EasyRecyclerView
                     android:id="@+id/recycler_project"
+                    android:layout_marginTop="4dp"
                     android:layout_width="match_parent"
                     android:scrollbars="none"
-                    android:layout_marginBottom="10dp"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content" />
 
                 <View
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#DDDDDD"/>
-            </LinearLayout>
+                    android:layout_height="1dp"/>
+            </RelativeLayout>
 
         </LinearLayout>
+
+
     </ScrollView>
 
 

@@ -39,6 +39,9 @@
             android:textColor="@drawable/colors"
             android:textSize="12sp" />
 
+
+
+
         <RadioButton
             android:id="@+id/rb_tab_menu_material"
             android:layout_width="0dp"
@@ -53,6 +56,25 @@
             android:text="@string/rb_tab_menu_material"
             android:textColor="@drawable/colors"
             android:textSize="12sp" />
+
+
+
+        <RadioButton
+            android:id="@+id/rb_tab_menu_callWorker"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/main_tab_menu_callphone"
+            android:gravity="center"
+            android:paddingTop="6dp"
+            android:text="@string/rb_tab_menu_callWorker"
+            android:textColor="@drawable/colors"
+            android:textSize="12sp" />
+
+
 
 
         <RadioButton

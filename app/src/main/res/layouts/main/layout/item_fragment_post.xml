@@ -14,12 +14,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="8dp"
             android:orientation="vertical">
 
             <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/layout_apply"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="26dp">
+
+                <TextView
+                    android:id="@+id/tv_signUp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已报名"
+                    android:textColor="#ff666666"
+                    android:textSize="12sp" />
+
+                <com.jude.easyrecyclerview.EasyRecyclerView
+                    android:id="@+id/applyRecyView"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:nestedScrollingEnabled="false"
+                    app:recyclerClipToPadding="true"
+                    app:scrollbarStyle="insideOverlay"
+                    app:scrollbars="none" />
+                <ImageView
+                    android:src="@mipmap/me_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <View
+                android:visibility="gone"
+                android:id="@+id/layout_apply_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_marginTop="4dp"
+                android:background="#DDDDDD" />
+
+            <LinearLayout
+                android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -95,6 +136,7 @@
                 android:textSize="16sp" />
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/addviewlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

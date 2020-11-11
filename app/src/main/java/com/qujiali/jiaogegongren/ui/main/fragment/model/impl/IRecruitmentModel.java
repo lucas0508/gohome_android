@@ -7,6 +7,6 @@ import java.util.Map;
 public interface IRecruitmentModel {
 
 
-    void loadRecruitmentData(Map<String, Object> map, String cityCode, String searchContent, IBaseModel.OnCallbackListener listener);
+    void loadRecruitmentData(Map<String, Object> map, String cityCode, String searchContent,String related, IBaseModel.OnCallbackListener listener);
 
 }

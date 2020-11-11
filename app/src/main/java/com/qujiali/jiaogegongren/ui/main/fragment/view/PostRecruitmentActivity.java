@@ -105,7 +105,7 @@ public class PostRecruitmentActivity extends BaseActivity implements IPostRecrui
     @BindView(R.id.et_phone)
     EditText et_phone;
 
-    private ArrayList<String> mPathList = new ArrayList<>();
+    private List<String> mPathList = new ArrayList<>();
     private int picNum = 0;
     PostRecruitmentAdapter mAdapter;
     private GridViewAddImgesAdpter mGridViewAddImgesAdpter;
@@ -117,6 +117,7 @@ public class PostRecruitmentActivity extends BaseActivity implements IPostRecrui
     private String mDistrictCode;
     private YwpAddressBean mYwpAddressBean;
     String labels = "";
+
     @Override
     protected int setLayoutResourceID() {
         return R.layout.activity_post_recruitment;
@@ -128,11 +129,11 @@ public class PostRecruitmentActivity extends BaseActivity implements IPostRecrui
         mTitle.setText("招工信息");
         int id = getIntent().getIntExtra("RecruitmentEntity_id", -1);
         Logger.d("数据：" + id);
-        postRecruitmentPresenter.queryLabel();
+        //postRecruitmentPresenter.queryLabel();
 
         et_phone.setText(UserInfo.getUserPhone());
-        Glide.with(this).load(UserInfo.getUserImage()).into(riv_headImage);
-        imageUrlPath=UserInfo.getUserImage();
+        Glide.with(this).applyDefaultRequestOptions(MyAppGlideModule.getRequestOptions()).load(UserInfo.getUserImage()).into(riv_headImage);
+        imageUrlPath = UserInfo.getUserImage();
         if (id != -1)
             postRecruitmentPresenter.queryWorkersData(id);
         initRecycler();
@@ -235,8 +236,9 @@ public class PostRecruitmentActivity extends BaseActivity implements IPostRecrui
             mContent.setText(recruitmentEntity.getDescribe());
             String imags = recruitmentEntity.getImags();
             if (!TextUtils.isEmpty(imags)) {
-                String[] split1 = imags.split(",");
-                mGridViewAddImgesAdpter.notifyDataSetChanged(Arrays.asList(split1), true);
+                List<String> strings = DevicePermissionsUtils.stringToList(imags);
+                mPathList=strings;
+                mGridViewAddImgesAdpter.notifyDataSetChanged(mPathList,true);
             } else {
                 if (recruitmentEntity.getStatus() != 2) {
                     mGridView.setVisibility(View.GONE);
@@ -280,13 +282,13 @@ public class PostRecruitmentActivity extends BaseActivity implements IPostRecrui
         AddressPickerView addressView = rootView.findViewById(R.id.apvAddress);
         addressView.setOnAddressPickerSure(new AddressPickerView.OnAddressPickerSureListener() {
             @Override
-            public void onSureClick(String allAddress,String address, String provinceCode, String cityCode, String districtCode) {
+            public void onSureClick(String allAddress, String address, String provinceCode, String cityCode, String districtCode) {
                 String mProvinceCode = provinceCode;
                 String mCityCode = cityCode;
                 mDistrictCode = districtCode;
                 cityName = allAddress;
                 Log.e("onSureClick: ", mProvinceCode + "---" + mCityCode + "---" + mDistrictCode);
-                tv_choose_city.setText(address);
+                tv_choose_city.setText(cityName);
                 popupWindow.dismiss();
                 tv_choose_city.setEnabled(true);
             }
@@ -296,8 +298,8 @@ public class PostRecruitmentActivity extends BaseActivity implements IPostRecrui
         popupWindow.setOutsideTouchable(true);
         popupWindow.setTouchable(true);
         popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        popupWindow.showAsDropDown(tv_choose_city);
         popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.showAsDropDown(tv_choose_city);
         StringBuilder jsonSB = new StringBuilder();
         try {
             BufferedReader addressJsonStream = new BufferedReader(new InputStreamReader(getContext().getAssets().open("address.json")));
@@ -309,20 +311,23 @@ public class PostRecruitmentActivity extends BaseActivity implements IPostRecrui
         }
         // 将数据转换为对象
         mYwpAddressBean = new Gson().fromJson(jsonSB.toString(), YwpAddressBean.class);
+        mYwpAddressBean.getProvince().remove(0);
+        mYwpAddressBean.getCity().remove(0);
+        mYwpAddressBean.getDistrict().remove(0);
         addressView.initData(mYwpAddressBean);
 
     }
 
 
     private void submitData() {
-        if (TextUtils.isEmpty(imageUrlPath)) {
+      /*  if (TextUtils.isEmpty(imageUrlPath)) {
             mApp.shortToast("请选择头像");
             return;
         }
         if (TextUtils.isEmpty(et_nickName.getText().toString().trim())) {
             mApp.shortToast("请输入昵称");
             return;
-        }
+        }*/
         if (TextUtils.isEmpty(et_phone.getText().toString().trim())) {
             mApp.shortToast("请输入联系电话");
             return;
@@ -346,7 +351,7 @@ public class PostRecruitmentActivity extends BaseActivity implements IPostRecrui
             return;
         }
 
-        ArrayList<String> selectedItem = mAdapter.getSelectedItem();
+/*        ArrayList<String> selectedItem = mAdapter.getSelectedItem();
 
         if (selectedItem.size() > 0) {
             StringBuilder strBuilder = new StringBuilder();
@@ -358,17 +363,17 @@ public class PostRecruitmentActivity extends BaseActivity implements IPostRecrui
             Log.e("submitData--------: ", labels);
             labels = labels.substring(0, labels.length() - ",".length());
         }
-        System.out.println(labels);
+        System.out.println(labels);*/
 
-        if (imageUrlPath.startsWith("http")){
+       /* if (imageUrlPath.startsWith("http")) {
             //上传图片
-            if (mPathList!=null){
+            if (mPathList != null && mPathList.size() > 0) {
                 ArrayList<String> strings = new ArrayList<>(mPathList);
                 mApp.getLoadingDialog().show();
                 uploadFilePresenter.uploadMultipleImage(strings);
-            }else {
+            } else {
                 Map<String, Object> objectMap = new HashMap<>();
-                objectMap.put("profile",imageUrlPath);
+                objectMap.put("profile", imageUrlPath);
                 objectMap.put("phone", et_phone.getText().toString().trim());
                 objectMap.put("userName", et_nickName.getText().toString().trim());
                 objectMap.put("title", et_title.getText().toString().trim());
@@ -377,17 +382,33 @@ public class PostRecruitmentActivity extends BaseActivity implements IPostRecrui
                 objectMap.put("location", mDistrictCode);
                 objectMap.put("priceMargin", et_price.getText().toString().trim());
                 objectMap.put("labels", labels);
-                objectMap.put("imags","");
+                objectMap.put("imags", "");
                 postRecruitmentPresenter.submitWorkersData(objectMap);
             }
-        }else {
+        } else {
             //上传图片
+            mPathList.add(imageUrlPath);
+            mApp.getLoadingDialog().show();
+            uploadFilePresenter.uploadMultipleImage(mPathList);
+        }*/
+        if (mPathList != null && mPathList.size() > 0) {
             ArrayList<String> strings = new ArrayList<>(mPathList);
-            strings.add(imageUrlPath);
             mApp.getLoadingDialog().show();
             uploadFilePresenter.uploadMultipleImage(strings);
+        } else {
+            Map<String, Object> objectMap = new HashMap<>();
+//            objectMap.put("profile", imageUrlPath);
+            objectMap.put("phone", et_phone.getText().toString().trim());
+//            objectMap.put("userName", et_nickName.getText().toString().trim());
+            objectMap.put("title", et_title.getText().toString().trim());
+            objectMap.put("workType", et_work_type.getText().toString().trim());
+            objectMap.put("describe", mContent.getText().toString().trim());
+            objectMap.put("location", mDistrictCode);
+//            objectMap.put("priceMargin", et_price.getText().toString().trim());
+//            objectMap.put("labels", labels);
+            objectMap.put("imags", "");
+            postRecruitmentPresenter.submitWorkersData(objectMap);
         }
-
     }
 
 
@@ -439,6 +460,7 @@ public class PostRecruitmentActivity extends BaseActivity implements IPostRecrui
                                         } else if (selectIndex == 2) {
                                             mPathList.add(file.getAbsolutePath());
                                             mGridViewAddImgesAdpter.notifyDataSetChanged(mPathList);
+                                            Logger.e("Arrays mPathList--->"+Arrays.asList(mPathList));
                                         }
 
                                     } catch (Exception e) {
@@ -534,27 +556,28 @@ public class PostRecruitmentActivity extends BaseActivity implements IPostRecrui
     @Override
     public void UploadMultipleFileSuccess(List<String> strings) {
         // String labels = String.join(",",mAdapter.getSelectedItem());
-        String profile="";
-        if (imageUrlPath.startsWith("http")){
-             profile=imageUrlPath;
-        }else {
-             profile=strings.get(strings.size() - 1);
-        }
+        String profile = "";
         LinkedList<String> images = new LinkedList<>(strings);
-        images.removeLast();
-        Log.e("UploadMultiple 头像: ", strings.get(strings.size() - 1));
+
+        if (imageUrlPath.startsWith("http")) {
+            profile = imageUrlPath;
+        } else {
+            profile = strings.get(strings.size() - 1);
+            images.removeLast();
+        }
+        Log.e("UploadMultiple 头像: ", profile);
         Log.e("UploadMultiple 多图: ", new Gson().toJson(images));
         Map<String, Object> objectMap = new HashMap<>();
-        objectMap.put("profile", profile);
+//        objectMap.put("profile", profile);
         objectMap.put("phone", et_phone.getText().toString().trim());
-        objectMap.put("userName", et_nickName.getText().toString().trim());
+//        objectMap.put("userName", et_nickName.getText().toString().trim());
         objectMap.put("title", et_title.getText().toString().trim());
         objectMap.put("workType", et_work_type.getText().toString().trim());
         objectMap.put("describe", mContent.getText().toString().trim());
         objectMap.put("location", mDistrictCode);
-        objectMap.put("priceMargin", et_price.getText().toString().trim());
-        objectMap.put("labels", labels);
-        objectMap.put("imags", DevicePermissionsUtils.listToString(images));
+//        objectMap.put("priceMargin", et_price.getText().toString().trim());
+//        objectMap.put("labels", labels);
+        objectMap.put("imags", DevicePermissionsUtils.listToString(strings));
         postRecruitmentPresenter.submitWorkersData(objectMap);
     }
 
