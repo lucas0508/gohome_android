@@ -184,7 +184,8 @@ public class PhotoUtils {
      */
     private static void startCropActivity(Activity context, Uri sourceUri) {
         String name = String.format("imagecrop-%d.jpg", System.currentTimeMillis()) + ".jpg";
-        File fileUri = new File(Environment.getExternalStorageDirectory().getPath(), name);
+//        File fileUri = new File(Environment.getExternalStorageDirectory().getPath(), name);
+        File fileUri = new File(context.getCacheDir(), name);
         Uri mDestinationUri = Uri.fromFile(fileUri);
         UCrop uCrop = UCrop.of(sourceUri, mDestinationUri);
 

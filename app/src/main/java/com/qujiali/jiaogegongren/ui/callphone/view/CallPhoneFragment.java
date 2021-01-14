@@ -71,6 +71,8 @@ public class CallPhoneFragment extends BaseFragment implements View.OnClickListe
 
     @BindView(R.id.tv_serviceIntroduction)
     TextView tv_serviceIntroduction;
+    @BindView(R.id.tv_franchiseeName)
+    TextView tv_franchiseeName;
 
 
     public static CallPhoneFragment instance;
@@ -221,6 +223,7 @@ public class CallPhoneFragment extends BaseFragment implements View.OnClickListe
             tv_quotation.setVisibility(View.VISIBLE);
             callWorkerNumber = callPhoneEntity.getCallWorkerNumber();
             tv_callPhone.setText(callWorkerNumber);
+            tv_franchiseeName.setText(callPhoneEntity.getFranchiseeName());
             tv_feedbackCall.setText("售后（投诉）电话：" + callPhoneEntity.getComplaintNumber());
         } else {
             tv_quotation.setVisibility(View.GONE);

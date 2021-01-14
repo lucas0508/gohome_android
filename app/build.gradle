@@ -3,13 +3,13 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         debug {
-            storeFile file('D:\\xrf\\demoaaaaaaaaaaaaa\\gohomeAndroid\\app\\jiaogegongren_keystore.jks')
+            storeFile file('E:\\xrf\\project\\qujiali\\gohomeAndroid\\app\\jiaogegongren_keystore.jks')
             storePassword 'jiaogegongren2018!'
             keyAlias 'jiaogegongren'
             keyPassword 'jiaogegongren2018!'
         }
         release {
-            storeFile file('D:\\xrf\\demoaaaaaaaaaaaaa\\gohomeAndroid\\app\\jiaogegongren_keystore.jks')
+            storeFile file('E:\\xrf\\project\\qujiali\\gohomeAndroid\\app\\jiaogegongren_keystore.jks')
             storePassword 'jiaogegongren2018!'
             keyAlias 'jiaogegongren'
             keyPassword 'jiaogegongren2018!'
@@ -69,17 +69,14 @@ android {
             pseudoLocalesEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // 一定要写在android节点中
-            applicationVariants.all { variant ->
-                variant.outputs.all {
-                    outputFileName = "叫个工人_${variant.name}-${variant.versionName}-${releaseTime()}.apk"
-                }
-            }
+//            applicationVariants.all { variant ->
+//                variant.outputs.all {
+//                    outputFileName = "叫个工人_${variant.name}-${variant.versionName}-${releaseTime()}.apk"
+//                }
+//            }
         }
 
         debug {
-
-
-
             buildConfigField "boolean", "Logger_DEBUG", "true"
             minifyEnabled false
             shrinkResources false
@@ -88,12 +85,12 @@ android {
             pseudoLocalesEnabled true
 //            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            android.applicationVariants.all {
-                variant ->
-                    variant.outputs.all {
-                        outputFileName = "叫个工人-${variant.name}-${variant.versionName}-${releaseTime()}.apk"
-                    }
-            }
+//            android.applicationVariants.all {
+//                variant ->
+//                    variant.outputs.all {
+//                        outputFileName = "叫个工人-${variant.name}-${variant.versionName}-${releaseTime()}.apk"
+//                    }
+//            }
         }
     }
 

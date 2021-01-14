@@ -413,7 +413,6 @@ public class HomePageFragment extends BaseFragment implements IHomePageView, INe
             intent.putExtra("id", homeBeanAdapter.getItem(position).getId());
             intent.putExtra("role", homeBeanAdapter.getItem(position).getRole());
             startActivity(intent);
-
         });
     }
 

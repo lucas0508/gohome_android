@@ -1,2 +1,3 @@
+include ':spinner_lib'
 rootProject.name='gohome_android'
 include ':app'

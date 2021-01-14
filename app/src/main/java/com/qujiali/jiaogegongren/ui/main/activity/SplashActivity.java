@@ -70,7 +70,6 @@ public class SplashActivity extends BaseActivity implements IBannerView {
     protected void initView() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         mHandler = new Handler();
-        initPermission();
         mCache = ACache.get(this);
         ButterKnife.bind(this);
 
@@ -84,9 +83,26 @@ public class SplashActivity extends BaseActivity implements IBannerView {
                 goHomePage(asString);
             }
         } else {//有网的情况
-            bannerPresenter.queryBannerDataList(UserInfo.getCityCode(), "1","");
+            bannerPresenter.queryBannerDataList(UserInfo.getCityCode(), "1", "");
         }
 
+        if (isFirst) {
+            mApp.getConfirmAgreementDialog().show("服务协议和隐私政策", new ConfirmAgreementDialog.ConfirmCallback() {
+                @Override
+                public void onOk() {
+                    PreferenceUtil.put("isFirst", false);
+                    initPermission();
+                }
+                @Override
+                public void onCancel() {
+                    ActivityManager.getInstance().kill();
+                }
+            });
+        } else {
+            mTimeView.setVisibility(View.VISIBLE);
+            descTime();
+        }
+        mTimeView.setOnClickListener(v -> goToOtherPage());
     }
 
     private void descTime() {
@@ -114,66 +130,44 @@ public class SplashActivity extends BaseActivity implements IBannerView {
     }
 
     private void initPermission() {
-       requestRunPermission(DevicePermissionsUtils.autoObtainNeedAllPermission(this), new BaseActivity.PermissionListener() {
+        requestRunPermission(DevicePermissionsUtils.autoObtainNeedAllPermission(this), new BaseActivity.PermissionListener() {
             @Override
             public void onGranted() {
-                Logger.d("权限允许--cityCode->" +UserInfo.getCityCode());
+                Logger.d("权限允许--cityCode->" + UserInfo.getCityCode());
                 if (UserInfo.getCityCode() == null || UserInfo.getCityCode().equals("")) {
                     Intent service = new Intent(SplashActivity.this, LocationService.class);
                     startService(service);
                 }
-
-                if (isFirst){
-                    mApp.getConfirmAgreementDialog().show("服务协议和隐私政策", new ConfirmAgreementDialog.ConfirmCallback() {
-                        @Override
-                        public void onOk() {
-                            PreferenceUtil.put("isFirst",false);
-                            mTimeView.setVisibility(View.VISIBLE);
-                            descTime();
-                        }
-
-                        @Override
-                        public void onCancel() {
-                            ActivityManager.getInstance().kill();
-                        }
-                    });
-                }else {
-                    mTimeView.setVisibility(View.VISIBLE);
-                    descTime();
-                }
-                mTimeView.setOnClickListener(v -> goToOtherPage());
             }
 
             @Override
             public void onDenied(List<String> deniedPermission) {
                 Logger.d("权限拒绝");
-                //initPermission();
-                //userRefusePermissionsDialog();
-
-                if (isFirst){
-                    mApp.getConfirmAgreementDialog().show("服务协议和隐私政策", new ConfirmAgreementDialog.ConfirmCallback() {
-                        @Override
-                        public void onOk() {
-                            PreferenceUtil.put("isFirst",false);
-                            mTimeView.setVisibility(View.VISIBLE);
-                            descTime();
-                        }
-
-                        @Override
-                        public void onCancel() {
-                            ActivityManager.getInstance().kill();
-                        }
-                    });
-                }else {
-                    mTimeView.setVisibility(View.VISIBLE);
-                    descTime();
-                }
-                mTimeView.setOnClickListener(v -> goToOtherPage());
+//                if (isFirst) {
+//                    mApp.getConfirmAgreementDialog().show("服务协议和隐私政策", new ConfirmAgreementDialog.ConfirmCallback() {
+//                        @Override
+//                        public void onOk() {
+//                            PreferenceUtil.put("isFirst", false);
+//                            mTimeView.setVisibility(View.VISIBLE);
+//                            descTime();
+//                        }
+//
+//                        @Override
+//                        public void onCancel() {
+//                            ActivityManager.getInstance().kill();
+//                        }
+//                    });
+//                } else {
+//                    mTimeView.setVisibility(View.VISIBLE);
+//                    descTime();
+//                }
+//                mTimeView.setOnClickListener(v -> goToOtherPage());
             }
         });
-
+        PreferenceUtil.put("isFirst", false);
+        mTimeView.setVisibility(View.VISIBLE);
+        descTime();
     }
-
 
 
     @Override
@@ -187,7 +181,7 @@ public class SplashActivity extends BaseActivity implements IBannerView {
 
     private void goHomePage(String image) {
         Glide.with(GoHomeApplication.getContext()).load(image).into(mWelcome_ad);
-       // mTimeView.setOnClickListener(v -> goToOtherPage());
+        // mTimeView.setOnClickListener(v -> goToOtherPage());
     }
 
     @Override
@@ -199,7 +193,7 @@ public class SplashActivity extends BaseActivity implements IBannerView {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        bannerPresenter.queryBannerDataList("", "1","");
+        bannerPresenter.queryBannerDataList("", "1", "");
     }
 
 }
